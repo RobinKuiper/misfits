@@ -14,8 +14,27 @@ const Layout = (props: Props) => {
 
   useEffect(() => {
     setIntroWatched(sessionStorage.getItem('intro') === 'yes');
+  }, []);
 
-    setLoading(false);
+  useEffect(() => {
+    let loaded = 0;
+    var gate = new Image();
+    gate.onload = function () {
+      loaded++;
+
+      if (loaded === 2) setLoading(false);
+    };
+    gate.src = '/images/gate.webp';
+    if (gate.complete) gate.onload;
+
+    var gatebg = new Image();
+    gatebg.onload = function () {
+      loaded++;
+
+      if (loaded === 2) setLoading(false);
+    };
+    gatebg.src = '/images/gatebg.webp';
+    if (gatebg.complete) gatebg.onload;
   }, []);
 
   if (loading) return <h1>Loading...</h1>;
