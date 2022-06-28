@@ -145,9 +145,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const ref = TABLES.find((table) => table.id === params?.category);
   const db = ref?.table;
 
-  const where = session
-    ? { OR: [{ published: true }, { published: false }] }
-    : { published: true };
+  const where = session ? {} : { published: true };
 
   const items = await db?.findMany({
     where,
