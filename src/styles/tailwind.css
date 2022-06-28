@@ -5,3 +5,23 @@
 .black {
   background-color: #000;
 }
+
+.scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 20px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background: #444342;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #1f1d1d;
+  border-radius: 5px;
+  border: 1px solid #303129;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #c0a0b9;
+}

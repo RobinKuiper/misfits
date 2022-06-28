@@ -22,7 +22,7 @@ const ItemPage = (props: Props) => {
           </div>
         </Link>
 
-        <div className="text-white w-full p-4 space-y-5 sm:overflow-y-scroll">
+        <div className="text-white w-full p-4 space-y-5  mb-16 scrollbar sm:overflow-y-auto">
           {props.children}
         </div>
 
