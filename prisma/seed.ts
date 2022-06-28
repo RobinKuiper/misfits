@@ -121,7 +121,8 @@ async function main() {
 
     const newNote = {
       name: data.title || '',
-      description: data.text || ''
+      description: data.text || '',
+      image: ''
     }
 
     await prisma.note.create({
