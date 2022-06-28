@@ -116,9 +116,15 @@ const recaps = [
 async function main() {
   const salt = await bcrypt.genSalt(10);
 
-  const email = "test@test.nl"; // process.env.ADMIN_EMAIL as string
-  const username = "test"; // process.env.ADMIN_USERNAME as string
-  const password = await bcrypt.hash("test123", salt); // await bcrypt.hash(process.env.ADMIN_PASSWORD as string, salt)
+  await prisma.user.delete({
+    where: {
+      email: "test@test.nl"
+    }
+  })
+
+  const email = process.env.ADMIN_EMAIL as string
+  const username = process.env.ADMIN_USERNAME as string
+  const password = await bcrypt.hash(process.env.ADMIN_PASSWORD as string, salt)
 
   await prisma.user.upsert({
     where: { email },
