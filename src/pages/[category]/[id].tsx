@@ -4,11 +4,10 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import Router from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import Layout from '../../components/Layout';
 import { Item } from '../../interfaces/Item';
-import prisma from '../../lib/prisma';
 import { TABLES } from '../../utils/constants';
 
 type Props = {
@@ -25,14 +24,29 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
   const [name, setName] = useState(item.name);
   const [description, setDescription] = useState(item.description);
   const [image, setImage] = useState(item.image);
+  const [published, setPublished] = useState(item.published);
+
+  useEffect(() => {
+    setName(item.name);
+    setDescription(item.description);
+    setImage(item.image);
+    setPublished(item.published);
+  }, [item]);
 
   const toggleEdit = () => {
-    if (session) setEditting(!editting);
+    if (session.data) setEditting(!editting);
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    switch (e.target.name) {
+      case 'description':
+        setDescription(e.target.value);
+        console.log(description);
+        break;
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.name) {
       case 'name':
         setName(e.target.value);
@@ -40,16 +54,21 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
 
       case 'description':
         setDescription(e.target.value);
+        console.log(description);
         break;
 
       case 'image':
         setImage(e.target.value);
         break;
+
+      case 'published':
+        setPublished(e.target.checked);
+        break;
     }
   };
 
   const handleDelete = async () => {
-    if (!session) return;
+    if (!session.data) return;
 
     const endpoint = '/api/item';
 
@@ -70,8 +89,8 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
     Router.push(`/list/${category}/1`);
   };
 
-  const handleSave = async () => {
-    if (!session) return;
+  const togglePublish = async () => {
+    if (!session.data) return;
 
     const endpoint = '/api/item';
 
@@ -85,6 +104,32 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
         name,
         description,
         image,
+        published: !published,
+        type: category,
+      }),
+    };
+
+    const response = await fetch(endpoint, options);
+    const result = await response.json();
+    setPublished(!published);
+  };
+
+  const handleSave = async () => {
+    if (!session.data) return;
+
+    const endpoint = '/api/item';
+
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: item.id,
+        name,
+        description,
+        image,
+        published,
         type: category,
       }),
     };
@@ -102,8 +147,15 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
       </Head>
 
       <div className="sm:flex flex-row h-full relative">
-        {session && (
+        {session.data && (
           <div className="absolute bottom-0 right-0 flex space-x-5">
+            <button
+              onClick={togglePublish}
+              className="bg-black text-white p-3 rounded"
+            >
+              {published ? 'Unpublish' : 'Publish'}
+            </button>
+
             <button
               onClick={toggleEdit}
               className="bg-black text-white p-3 rounded"
@@ -143,14 +195,20 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
                     onChange={handleChange}
                   />
                 ) : (
-                  <h1 className="text-4xl text-[#B29438] mb-5">{item.name}</h1>
+                  <h1
+                    className={`text-4xl mb-5 ${
+                      published ? 'text-[#B29438]' : 'text-red-600'
+                    }`}
+                  >
+                    {item.name}
+                  </h1>
                 )}
                 {editting ? (
                   <textarea
                     className="text-black p-3 w-full h-96"
                     name="description"
                     defaultValue={item.description}
-                    onChange={handleChange}
+                    onChange={handleTextareaChange}
                   />
                 ) : (
                   <span
@@ -176,13 +234,25 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
                 editting) && (
                 <div className="w-full sm:w-1/2 relative sm:mx-20 h-64 sm:h-full">
                   {editting ? (
-                    <input
-                      type="text"
-                      defaultValue={item.image}
-                      className="text-black p-3 w-full mb-5"
-                      name="image"
-                      onChange={handleChange}
-                    />
+                    <>
+                      <input
+                        type="text"
+                        defaultValue={item.image}
+                        className="text-black p-3 w-full mb-5"
+                        name="image"
+                        onChange={handleChange}
+                      />
+                      <div className="space-x-3">
+                        <input
+                          type="checkbox"
+                          defaultChecked={item.published}
+                          name="published"
+                          onChange={handleChange}
+                          className="w-6 h-6 text-green-600 border-0 rounded-md focus:ring-0"
+                        />
+                        <label className="text-3xl">Published</label>
+                      </div>
+                    </>
                   ) : (
                     <div className="shadow-2xl h-full">
                       {item.image && (

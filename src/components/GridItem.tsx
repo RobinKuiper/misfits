@@ -3,15 +3,17 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { CircleLoader } from 'react-spinners';
+import { Item } from '../interfaces/Item';
 
 type Props = {
-  title: string;
+  item: Item;
   url: string;
-  image: string | undefined;
 };
 
-const GridItem = ({ title, url, image }: Props) => {
+const GridItem = ({ item, url }: Props) => {
   const [loading, setLoading] = useState(true);
+
+  const { name, image, published } = item;
 
   useEffect(() => {
     if (!image) return setLoading(false);
@@ -32,10 +34,11 @@ const GridItem = ({ title, url, image }: Props) => {
         }}
         className="border-2 border-zinc-800 shadow rounded cursor-pointer flex flex-col px-3 py-2"
         style={{
-          background: 'rgba(0,0,0,0.7)',
+          background: published ? 'rgba(0,0,0,0.7)' : '#f1f1f1',
+          color: published ? 'white' : 'black',
         }}
       >
-        <a className="text-xl mb-2">{title}</a>
+        <a className="text-xl mb-2">{name}</a>
         {loading ? (
           <div className="flex justify-center items-center">
             <CircleLoader size="50px" color="#A2821A" />

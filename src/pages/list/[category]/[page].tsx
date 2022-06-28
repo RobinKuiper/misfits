@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
@@ -34,7 +34,7 @@ const List = ({ items, currentPage, totalPages, category }: Props) => {
   }, [items, query]);
 
   const handleCreate = async () => {
-    if (!session) return;
+    if (!session.data) return;
 
     const endpoint = '/api/item';
 
@@ -60,7 +60,7 @@ const List = ({ items, currentPage, totalPages, category }: Props) => {
       </Head>
 
       <div className="flex flex-row h-full relative">
-        {session && (
+        {session.data && (
           <div className="absolute bottom-0 right-0 flex space-x-5">
             <button
               onClick={handleCreate}
@@ -116,8 +116,7 @@ const List = ({ items, currentPage, totalPages, category }: Props) => {
                   {shownItems.map((item) => (
                     <GridItem
                       key={item.id}
-                      title={item.name}
-                      image={item.image}
+                      item={item}
                       url={`/${category}/${item.id}`}
                     />
                   ))}
@@ -137,10 +136,22 @@ const List = ({ items, currentPage, totalPages, category }: Props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  req,
+}) => {
+  const session = await getSession({ req });
+
   const ref = TABLES.find((table) => table.id === params?.category);
   const db = ref?.table;
-  const items = await db?.findMany();
+
+  const where = session
+    ? { OR: [{ published: true }, { published: false }] }
+    : { published: true };
+
+  const items = await db?.findMany({
+    where,
+  });
   const page = Number(params?.page) || 1;
 
   return {

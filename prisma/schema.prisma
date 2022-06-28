@@ -24,6 +24,7 @@ model Character {
   name        String
   description String
   image       String
+  published   Boolean @default(false)
 }
 
 model Location{
@@ -31,6 +32,7 @@ model Location{
   name        String
   description String
   image       String
+  published   Boolean @default(false)
 }
 
 model Npc{
@@ -38,6 +40,7 @@ model Npc{
   name        String
   description String
   image       String
+  published   Boolean @default(false)
 }
 
 model Item{
@@ -45,6 +48,7 @@ model Item{
   name        String
   description String
   image       String
+  published   Boolean @default(false)
 }
 
 model Recap{
@@ -59,4 +63,5 @@ model Note{
   name        String
   description String
   image       String
+  published   Boolean @default(false)
 }
