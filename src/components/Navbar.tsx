@@ -4,7 +4,7 @@ import { GiCharacter, GiHamburgerMenu, GiHeartNecklace } from 'react-icons/gi';
 import { MdLocationOn } from 'react-icons/md';
 import { IoIosPeople } from 'react-icons/io';
 import { useRouter } from 'next/router';
-import { BiSearch } from 'react-icons/bi';
+import { AiOutlineGithub } from 'react-icons/ai';
 import { FaJournalWhills } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import '@fontsource/barriecito';
@@ -97,13 +97,21 @@ const Navbar = (props: Props) => {
         </ul>
 
         <ul className="hidden sm:flex items-center">
-          {true === true && (
+          <li className="h-10 w-10 text-white text-3xl justify-center items-center flex">
+            <Link href="https://github.com/RobinKuiper/misfits">
+              <a target="_blank" rel="noopener noreferrer">
+                <AiOutlineGithub />
+              </a>
+            </Link>
+          </li>
+
+          {/* {true === true && (
             <li className="h-10 w-10 text-white text-4xl">
               <button onClick={() => setSearchActive(true)}>
                 <BiSearch />
               </button>
             </li>
-          )}
+          )} */}
 
           {/* {searchActive && (
           <li className="">
