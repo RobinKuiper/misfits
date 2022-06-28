@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from './Navbar';
+import { CircleLoader } from 'react-spinners';
 
 type Props = {
   children: ReactElement[] | ReactElement;
@@ -37,7 +38,12 @@ const Layout = (props: Props) => {
     if (gatebg.complete) gatebg.onload;
   }, []);
 
-  if (loading) return <h1>Loading...</h1>;
+  if (loading)
+    return (
+      <div className="flex w-full h-screen justify-center items-center">
+        <CircleLoader size="100px" color="#A2821A" />
+      </div>
+    );
 
   return (
     <div
