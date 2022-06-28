@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import Layout from '../../components/Layout';
 import { Item } from '../../interfaces/Item';
+import prisma from '../../lib/prisma';
 import { TABLES } from '../../utils/constants';
 
 type Props = {
@@ -29,7 +30,9 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
     if (session) setEditting(!editting);
   };
 
-  const handleChange = (e: React.SyntheticEvent) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     switch (e.target.name) {
       case 'name':
         setName(e.target.value);
@@ -182,11 +185,13 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
                     />
                   ) : (
                     <div className="shadow-2xl h-full">
-                      <Image
-                        src={item.image}
-                        layout="fill"
-                        objectFit="contain"
-                      />
+                      {item.image && (
+                        <Image
+                          src={item.image}
+                          layout="fill"
+                          objectFit="contain"
+                        />
+                      )}
                     </div>
                   )}
                 </div>
@@ -213,18 +218,15 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const ref = TABLES.find((table) => table.id === params?.category);
 
-  if (!ref)
-    return {
-      props: {},
-    };
+  if (!ref) return { props: {} };
 
   const db = ref.table;
 
+  if (!db) return { props: {} };
+
   const items = await db.findMany();
 
-  const item = items.find(
-    (item: Item) => Number(item.id) === Number(params?.id)
-  );
+  const item = items.find((item) => Number(item.id) === Number(params?.id));
 
   if (!item)
     return {

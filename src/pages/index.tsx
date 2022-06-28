@@ -2,13 +2,11 @@ import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Layout from '../components/Layout';
-import { Character } from '../interfaces/Character';
-import { Location } from '../interfaces/Location';
-import { Npc } from '../interfaces/Npc';
+import { Item } from '../interfaces/Item';
 import prisma from '../lib/prisma';
 
 type Props = {
-  featured: Npc | Location | Character;
+  featured: Item;
 };
 
 const Home = (props: Props) => {
