@@ -48,6 +48,7 @@ const Layout = (props: Props) => {
               backgroundPosition: 'center center',
               backgroundRepeat: 'no-repeat',
               // backgroundAttachment: 'fixed',
+              zIndex: 10,
             }}
             animate={{
               opacity: introWatched ? 0 : [1, 0, 0],
@@ -76,6 +77,7 @@ const Layout = (props: Props) => {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center center',
                   backgroundRepeat: 'no-repeat',
+                  zIndex: 15,
                   // backgroundAttachment: 'fixed',
                 }}
               ></div>
