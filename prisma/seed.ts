@@ -100,91 +100,80 @@ const items = [
 
 const recaps = [
   {
-    title: 'Recap: Road to Bazzoxan',
-    text: '<p>Turrinn became sick during the festival and went back to the inn.</p><p>The rest over the group went towards the rice fields on the outside of the city, Jakar and Helix competed in a contest there and won it.<br />After that there was time for one more contest and you decided to try the pie eating contest again. This time Helix won a medal there.<br />Irvan stole a medal from Jakar here.</p><p>Almost the whole city gathered in the center when the sun started setting. Once there you saw that they made a podium where the elders where discussing. They announced that the Misfits and the Raven Claw\'s had the most medals.</p><p>The final contest was a race through the Emerald Grotto to find a medal that they hid there.</p><p>You went in, with the other group on your heels.<br />Swimming as fast as possible.<br />Happy casted a Darkness spell behind you guys, and Helix and Jakar split up from Happy.</p><p>Happy swam very fast to and open cavern, where she saw a shark with a medal on his neck. She grabbed the medal with a mage hand, and saw a cavern wall with some gold light shining through it.<br />She decided to see if you could pass through there, and she did, coming in a cavern with a pedestal with a Golden necklace on it. She grabbed the necklace and fell unconscious. She had a vision of Alyxian.</p><p>Jakar and Helix found her, they made it all out, and won the Festival of Merit\'s final battle.</p><p>You guys partied for the night, with the rest of town, and the next morning you woke up from the sound of Elder Colbu knocking on the door.<br />He invited you for breakfast, told you about a vision he had and gave you your rewards. 100 gold and a horizonback tortoise.</p><p>You guys went on your way to Bazaxxon (clues from the vision let you there).</p>'
+    name: 'Recap: Road to Bazzoxan',
+    description: '<p>Turrinn became sick during the festival and went back to the inn.</p><p>The rest over the group went towards the rice fields on the outside of the city, Jakar and Helix competed in a contest there and won it.<br />After that there was time for one more contest and you decided to try the pie eating contest again. This time Helix won a medal there.<br />Irvan stole a medal from Jakar here.</p><p>Almost the whole city gathered in the center when the sun started setting. Once there you saw that they made a podium where the elders where discussing. They announced that the Misfits and the Raven Claw\'s had the most medals.</p><p>The final contest was a race through the Emerald Grotto to find a medal that they hid there.</p><p>You went in, with the other group on your heels.<br />Swimming as fast as possible.<br />Happy casted a Darkness spell behind you guys, and Helix and Jakar split up from Happy.</p><p>Happy swam very fast to and open cavern, where she saw a shark with a medal on his neck. She grabbed the medal with a mage hand, and saw a cavern wall with some gold light shining through it.<br />She decided to see if you could pass through there, and she did, coming in a cavern with a pedestal with a Golden necklace on it. She grabbed the necklace and fell unconscious. She had a vision of Alyxian.</p><p>Jakar and Helix found her, they made it all out, and won the Festival of Merit\'s final battle.</p><p>You guys partied for the night, with the rest of town, and the next morning you woke up from the sound of Elder Colbu knocking on the door.<br />He invited you for breakfast, told you about a vision he had and gave you your rewards. 100 gold and a horizonback tortoise.</p><p>You guys went on your way to Bazaxxon (clues from the vision let you there).</p>',
+    image: ''
   },
   {
-    title: 'Note: Emerald Grotto Vision',
-    text: '<p>“The light around the pedestal fades as a spectral figure in the form of a male human rises from the amulet. He is dressed in leather armor and a tattered red cape and wears a shield. His face is framed by curly brown hair and bears a melancholic expression. He pleads, "I am imprisoned. Please help me."</p><p>Suddenly, the ground vanishes beneath your feet, and you fall, tumbling through a vortex of golden light. You fall deeper, deeper, deeper, then suddenly stop. The golden light subsides, and you find yourself suspended in a pitch-black expanse. You feel water buoying you. A vermilion light appears in the distance, illuminating the melancholy warrior, who is shackled to the ground by disgusting strands of a fleshy, crimson substance.</p><p>He raises his gaze to the heavens and, sobbing, chokes out, "Moon Weaver, I beg of you. Guide those with the power to save me to the site where first I prayed to you." He looks around, and his eyes settle on you. "Oh! Thank the gods; bless the Moon Weaver. Someone has come! I am Alyxian, and I beg you to free me." He looks to you with desperate eyes. “Nooo, you are already fading,” he says panicking. “Go to the other shrines where I prayed and the gods came to me so long ago. To the Change Bringer, in the heart of the Evil Ones’ temple. And to the Arch Heart, in the… ruins of the jungle city.” Alyxian’s voice begins to fade away. “I might… able… speak again…”</p><p>You feel consciousness leaving you, as if the pressure of the water were crushing the life out of you. Alyxian\'s voice is the last thing you hear before you pass out. "Save me. Please."”</p>'
+    name: 'Note: Emerald Grotto Vision',
+    description: '<p>“The light around the pedestal fades as a spectral figure in the form of a male human rises from the amulet. He is dressed in leather armor and a tattered red cape and wears a shield. His face is framed by curly brown hair and bears a melancholic expression. He pleads, "I am imprisoned. Please help me."</p><p>Suddenly, the ground vanishes beneath your feet, and you fall, tumbling through a vortex of golden light. You fall deeper, deeper, deeper, then suddenly stop. The golden light subsides, and you find yourself suspended in a pitch-black expanse. You feel water buoying you. A vermilion light appears in the distance, illuminating the melancholy warrior, who is shackled to the ground by disgusting strands of a fleshy, crimson substance.</p><p>He raises his gaze to the heavens and, sobbing, chokes out, "Moon Weaver, I beg of you. Guide those with the power to save me to the site where first I prayed to you." He looks around, and his eyes settle on you. "Oh! Thank the gods; bless the Moon Weaver. Someone has come! I am Alyxian, and I beg you to free me." He looks to you with desperate eyes. “Nooo, you are already fading,” he says panicking. “Go to the other shrines where I prayed and the gods came to me so long ago. To the Change Bringer, in the heart of the Evil Ones’ temple. And to the Arch Heart, in the… ruins of the jungle city.” Alyxian’s voice begins to fade away. “I might… able… speak again…”</p><p>You feel consciousness leaving you, as if the pressure of the water were crushing the life out of you. Alyxian\'s voice is the last thing you hear before you pass out. "Save me. Please."”</p>',
+    image: ''
   },
   {
-    title: 'Note: Vision During Demon Fight',
-    text: '<p>Your vision goes dark, and for a moment you are under water with its weight pressing down, crushing the breath from your lungs, and a dim red light in the distance. Then, a moment later, you are back on the battle field, but it\'s a different one.</p><p>The sky is dim, and you are surrounded by creatures. You stab your spear through a slavering demon before spinning and slicing through the throat of an equally slavering human, one of those twisted enough to side with the Betrayers. You see one of the defenders cut down, their red blood mixing with the black ichor that you feel squish beneath your boots. You spin and dodge, cutting and stabbing, the smell of blood and rotten eggs burning your nose. Where is Perigee?</p><p>Moving further into the fray, a massive demon with tusks and dripping black feathers rakes its claws down your back. You barely feel it, noticing only for the time it takes to deliver a spear strike through its skull. You must find Perigee. She is your divinely granted, immortal companion; if a being created and blessed by the Moon Weaver herself cannot overcome the curse of Ruidus, what hope is there? She leads the defense; she\'ll be with the worst of the fighting, the largest of the demons. You charge through a clump of lesser demons, shield first, sending them to the ground, dimly aware that they are being crushed under the hooves of the bull demon goring another of your allies.</p><p>A divinely bright blast of radiant light thins the field before you, and you can see her, Perigee, with moon bright wings and a shining mace spattered in black gore. She fights fiercely, and she is strong. You know this; she has saved your life countless times while you two strive to cleanse the temple, to end the demonic presence in Wildemount. But her foe is a massive black-winged demon of fire. Its whip is coiled around her forearm, burning the flesh; you can smell it from here, can feel the heat the creature gives off. Another twist and stab. You hear Perigee chanting a prayer to the Moon Weaver, hear the clang as she deflects a fiery sword strike, smell burning feathers. The divine light grows brighter, her voice louder; you cry out her name. But the demon delivers another strike, and Abyssal and divine fire clash, combining in a massive explosion.</p><p>Your eyes clear, blinking away tears. Everyone around blast radius, friend and for alike, is char, smoldering on the ground. The demonic general is already melting into smoking, black ichor. And Perigee is softly glowing ash. Above, Catha shines, full and beautiful. Beside it, Ruidus gleams, red and hateful.</p><p>You fall to your knees. Time slows and speeds. On the battlefield around you, the enemy flees and scatters, their general defeated. Your remaining allies cheer, for they have survived another day, repelled another attempt to retake Bazzoxan. But you cannot find joy, cannot breathe for the pain in your chest. Eventually, the sun rises, and so does Alyxian, off to fight another battle.</p>'
+    name: 'Note: Vision During Demon Fight',
+    description: '<p>Your vision goes dark, and for a moment you are under water with its weight pressing down, crushing the breath from your lungs, and a dim red light in the distance. Then, a moment later, you are back on the battle field, but it\'s a different one.</p><p>The sky is dim, and you are surrounded by creatures. You stab your spear through a slavering demon before spinning and slicing through the throat of an equally slavering human, one of those twisted enough to side with the Betrayers. You see one of the defenders cut down, their red blood mixing with the black ichor that you feel squish beneath your boots. You spin and dodge, cutting and stabbing, the smell of blood and rotten eggs burning your nose. Where is Perigee?</p><p>Moving further into the fray, a massive demon with tusks and dripping black feathers rakes its claws down your back. You barely feel it, noticing only for the time it takes to deliver a spear strike through its skull. You must find Perigee. She is your divinely granted, immortal companion; if a being created and blessed by the Moon Weaver herself cannot overcome the curse of Ruidus, what hope is there? She leads the defense; she\'ll be with the worst of the fighting, the largest of the demons. You charge through a clump of lesser demons, shield first, sending them to the ground, dimly aware that they are being crushed under the hooves of the bull demon goring another of your allies.</p><p>A divinely bright blast of radiant light thins the field before you, and you can see her, Perigee, with moon bright wings and a shining mace spattered in black gore. She fights fiercely, and she is strong. You know this; she has saved your life countless times while you two strive to cleanse the temple, to end the demonic presence in Wildemount. But her foe is a massive black-winged demon of fire. Its whip is coiled around her forearm, burning the flesh; you can smell it from here, can feel the heat the creature gives off. Another twist and stab. You hear Perigee chanting a prayer to the Moon Weaver, hear the clang as she deflects a fiery sword strike, smell burning feathers. The divine light grows brighter, her voice louder; you cry out her name. But the demon delivers another strike, and Abyssal and divine fire clash, combining in a massive explosion.</p><p>Your eyes clear, blinking away tears. Everyone around blast radius, friend and for alike, is char, smoldering on the ground. The demonic general is already melting into smoking, black ichor. And Perigee is softly glowing ash. Above, Catha shines, full and beautiful. Beside it, Ruidus gleams, red and hateful.</p><p>You fall to your knees. Time slows and speeds. On the battlefield around you, the enemy flees and scatters, their general defeated. Your remaining allies cheer, for they have survived another day, repelled another attempt to retake Bazzoxan. But you cannot find joy, cannot breathe for the pain in your chest. Eventually, the sun rises, and so does Alyxian, off to fight another battle.</p>',
+    image: ''
   }
 ]
 
 async function main() {
-  // const recaps = await prisma.recap.findMany();
+  return;
+  
+  const salt = await bcrypt.genSalt(10);
 
-  // recaps.forEach(async (recap) => {
-  //   const { id, ...data } = recap;
+  const email = process.env.ADMIN_EMAIL as string
+  const username = process.env.ADMIN_USERNAME as string
+  const password = await bcrypt.hash(process.env.ADMIN_PASSWORD as string, salt)
 
-  //   const newNote = {
-  //     name: data.title || '',
-  //     description: data.text || '',
-  //     image: ''
-  //   }
+  await prisma.user.upsert({
+    where: { email },
+    update: {},
+    create: {
+      email,
+      username,
+      password,
+    },
+  });
 
-  //   await prisma.note.create({
-  //     data: newNote
-  //   })
-  // })
+  await prisma.character.deleteMany({})
 
-  // const salt = await bcrypt.genSalt(10);
+  for(const character of characters){
+    await prisma.character.create({
+      data: character
+    })
+  }
 
-  // const email = process.env.ADMIN_EMAIL as string
-  // const username = process.env.ADMIN_USERNAME as string
-  // const password = await bcrypt.hash(process.env.ADMIN_PASSWORD as string, salt)
+  await prisma.location.deleteMany({})
 
-  // await prisma.user.upsert({
-  //   where: { email },
-  //   update: {},
-  //   create: {
-  //     email,
-  //     username,
-  //     password,
-  //   },
-  // });
+  for(const location of locations){
+    await prisma.location.create({
+      data: location
+    })
+  }
 
-  // await prisma.character.deleteMany({})
+  await prisma.npc.deleteMany({})
 
-  // for(const character of characters){
-  //   await prisma.character.create({
-  //     data: character
-  //   })
-  // }
+  for(const npc of npcs){
+    await prisma.npc.create({
+      data: npc
+    })
+  }
 
-  // await prisma.location.deleteMany({})
+    await prisma.item.deleteMany({})
 
-  // for(const location of locations){
-  //   await prisma.location.create({
-  //     data: location
-  //   })
-  // }
+  for(const item of items){
+    await prisma.item.create({
+      data: item
+    })
+  }
 
-  // await prisma.npc.deleteMany({})
+  await prisma.note.deleteMany({})
 
-  // for(const npc of npcs){
-  //   await prisma.npc.create({
-  //     data: npc
-  //   })
-  // }
-
-  //   await prisma.item.deleteMany({})
-
-  // for(const item of items){
-  //   await prisma.item.create({
-  //     data: item
-  //   })
-  // }
-
-  // for(const recap of recaps){
-  //   await prisma.recap.upsert({
-  //   where: { title: recap.title },
-  //   update: recap,
-  //   create: recap,
-  // });
-  // }
+  for(const recap of recaps){
+    await prisma.note.create({
+      data: recap
+    })
+  }
 }
 
 main()
