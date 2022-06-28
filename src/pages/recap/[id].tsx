@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 import Image from 'next/image';
 import React from 'react';
 import ItemPage from '../../components/ItemPage';
@@ -14,6 +15,10 @@ type Props = {
 const Recap = ({ recap, nextId, prevId }: Props) => {
   return (
     <ItemPage nextId={nextId} prevId={prevId} urlPrefix="/recap">
+      <Head>
+        <title>{recap.title} - Misfits</title>
+      </Head>
+
       <div className="h-full">
         <div className="flex gap-10 h-full">
           <div className="w-full">

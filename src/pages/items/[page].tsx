@@ -5,6 +5,7 @@ import prisma from '../../lib/prisma';
 import OverviewPage from '../../components/OverviewPage';
 import Pagination from '../../components/Pagination';
 import { Item } from '../../interfaces/Item';
+import Head from 'next/head';
 
 const perPage = 12;
 
@@ -28,6 +29,10 @@ const Items = (props: Props) => {
 
   return (
     <OverviewPage>
+      <Head>
+        <title>Items - Misfits</title>
+      </Head>
+
       <div className="h-full relative">
         <div className="h-full relative">
           <div className="mb-5">

@@ -6,6 +6,7 @@ import OverviewPage from '../../components/OverviewPage';
 import Pagination from '../../components/Pagination';
 import { Recap } from '../../interfaces/Recap';
 import Link from 'next/link';
+import Head from 'next/head';
 
 const perPage = 12;
 
@@ -29,6 +30,10 @@ const Recaps = (props: Props) => {
 
   return (
     <OverviewPage>
+      <Head>
+        <title>Recaps &amp; Notes - Misfits</title>
+      </Head>
+
       <div className="h-full relative">
         <div className="h-full relative">
           <div className="mb-5">

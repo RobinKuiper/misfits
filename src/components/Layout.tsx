@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import Navbar from './Navbar';
 
 type Props = {
-  children: ReactElement;
+  children: ReactElement[] | ReactElement;
 };
 
 const initialDelay = 1;

@@ -7,6 +7,7 @@ import Pagination from '../../components/Pagination';
 import { Location } from '../../interfaces/Location';
 import Link from 'next/link';
 import { FaMapMarkedAlt } from 'react-icons/fa';
+import Head from 'next/head';
 
 const perPage = 12;
 
@@ -30,6 +31,10 @@ const Locations = (props: Props) => {
 
   return (
     <OverviewPage>
+      <Head>
+        <title>Locations - Misfits</title>
+      </Head>
+
       <div className="h-full relative">
         <div className="h-full relative">
           <div className="mb-5 flex">

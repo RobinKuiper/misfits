@@ -1,6 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next';
+import Head from 'next/head';
 import Image from 'next/image';
-import Link from 'next/link';
 import Layout from '../components/Layout';
 import { Character } from '../interfaces/Character';
 import { Location } from '../interfaces/Location';
@@ -14,6 +14,10 @@ type Props = {
 const Home = (props: Props) => {
   return (
     <Layout>
+      <Head>
+        <title>Misfits</title>
+      </Head>
+
       <div className="flex w-full h-full text-white">
         <div className="w-full sm:w-1/2 space-y-5 p-20 pt-10">
           <h1 className="text-4xl">Call of the Netherdeep</h1>

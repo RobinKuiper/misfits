@@ -4,7 +4,7 @@ import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import Layout from './Layout';
 
 type Props = {
-  children: ReactElement;
+  children: ReactElement[] | ReactElement;
 };
 
 const OverviewPage = (props: Props) => {
