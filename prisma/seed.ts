@@ -114,67 +114,61 @@ const recaps = [
 ]
 
 async function main() {
-  const salt = await bcrypt.genSalt(10);
+  // const salt = await bcrypt.genSalt(10);
 
-  await prisma.user.delete({
-    where: {
-      email: "test@test.nl"
-    }
-  })
+  // const email = process.env.ADMIN_EMAIL as string
+  // const username = process.env.ADMIN_USERNAME as string
+  // const password = await bcrypt.hash(process.env.ADMIN_PASSWORD as string, salt)
 
-  const email = process.env.ADMIN_EMAIL as string
-  const username = process.env.ADMIN_USERNAME as string
-  const password = await bcrypt.hash(process.env.ADMIN_PASSWORD as string, salt)
+  // await prisma.user.upsert({
+  //   where: { email },
+  //   update: {},
+  //   create: {
+  //     email,
+  //     username,
+  //     password,
+  //   },
+  // });
 
-  await prisma.user.upsert({
-    where: { email },
-    update: {},
-    create: {
-      email,
-      username,
-      password,
-    },
-  });
+  // await prisma.character.deleteMany({})
 
-  await prisma.character.deleteMany({})
+  // for(const character of characters){
+  //   await prisma.character.create({
+  //     data: character
+  //   })
+  // }
 
-  for(const character of characters){
-    await prisma.character.create({
-      data: character
-    })
-  }
+  // await prisma.location.deleteMany({})
 
-  await prisma.location.deleteMany({})
+  // for(const location of locations){
+  //   await prisma.location.create({
+  //     data: location
+  //   })
+  // }
 
-  for(const location of locations){
-    await prisma.location.create({
-      data: location
-    })
-  }
+  // await prisma.npc.deleteMany({})
 
-  await prisma.npc.deleteMany({})
+  // for(const npc of npcs){
+  //   await prisma.npc.create({
+  //     data: npc
+  //   })
+  // }
 
-  for(const npc of npcs){
-    await prisma.npc.create({
-      data: npc
-    })
-  }
+  //   await prisma.item.deleteMany({})
 
-    await prisma.item.deleteMany({})
+  // for(const item of items){
+  //   await prisma.item.create({
+  //     data: item
+  //   })
+  // }
 
-  for(const item of items){
-    await prisma.item.create({
-      data: item
-    })
-  }
-
-  for(const recap of recaps){
-    await prisma.recap.upsert({
-    where: { title: recap.title },
-    update: recap,
-    create: recap,
-  });
-  }
+  // for(const recap of recaps){
+  //   await prisma.recap.upsert({
+  //   where: { title: recap.title },
+  //   update: recap,
+  //   create: recap,
+  // });
+  // }
 }
 
 main()

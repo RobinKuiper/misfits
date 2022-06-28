@@ -22,7 +22,9 @@ const ItemPage = (props: Props) => {
           </div>
         </Link>
 
-        <div className="text-white w-full p-4 space-y-5">{props.children}</div>
+        <div className="text-white w-full p-4 space-y-5 sm:overflow-y-scroll">
+          {props.children}
+        </div>
 
         <Link href={`${props.urlPrefix}/${props.prevId}`}>
           <div className="hidden w-1/12 text-white sm:flex justify-center items-center text-6xl cursor-pointer">

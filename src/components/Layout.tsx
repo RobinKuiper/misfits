@@ -38,6 +38,10 @@ const Layout = (props: Props) => {
     if (gatebg.complete) gatebg.onload;
   }, []);
 
+  useEffect(() => {
+    if (introWatched) document.querySelector('body')?.classList.add('black');
+  }, [introWatched]);
+
   if (loading)
     return (
       <div className="flex w-full h-screen justify-center items-center">
