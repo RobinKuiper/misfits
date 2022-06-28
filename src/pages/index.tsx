@@ -57,7 +57,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const tables = [prisma.npc, prisma.location, prisma.character, prisma.item];
   const table = tables[Math.floor(Math.random() * tables.length)];
 
-  const items = await table.findMany({ orderBy: { id: 'desc' } });
+  const items = await table.findMany({
+    where: { published: true },
+    orderBy: { id: 'desc' },
+  });
   const item = items[Math.floor(Math.random() * items.length)];
 
   return {
