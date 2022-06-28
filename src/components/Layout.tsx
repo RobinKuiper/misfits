@@ -43,7 +43,7 @@ const Layout = (props: Props) => {
           <motion.div
             className="h-screen overflow-hidden"
             style={{
-              background: 'url(/images/gatebg.png)',
+              background: 'url(/images/gatebg.webp)',
               backgroundSize: 'cover',
               backgroundPosition: 'center center',
               backgroundRepeat: 'no-repeat',
@@ -72,7 +72,7 @@ const Layout = (props: Props) => {
               <div
                 className="h-full"
                 style={{
-                  background: 'url(/images/gate.png)',
+                  background: 'url(/images/gate.webp)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center center',
                   backgroundRepeat: 'no-repeat',
@@ -107,8 +107,7 @@ const Layout = (props: Props) => {
             <div
               className="absolute top-0 left-0 w-full h-full -z-10"
               style={{
-                background:
-                  'url(https://cdn.wallpapersafari.com/48/16/ydSFEN.jpg)',
+                background: 'url(/images/stonebg.webp)',
                 backgroundPosition: 'center center',
                 backgroundSize: 'cover',
                 boxShadow: '0px 0px 15px 5px #000',
@@ -122,7 +121,7 @@ const Layout = (props: Props) => {
             style={{
               // background: 'url(https://www.thewargamespot.com/wp-content/uploads/2017/03/dark-pattern-backgrounds-wallpaper-2.jpg)',
               background:
-                'linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url(https://cdna.artstation.com/p/assets/images/images/020/722/284/large/maxim-lingert-concept-art-environment-wasteland.jpg?1568906821)',
+                'linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url(/images/wasteland.webp)',
               backgroundSize: '100%',
               backgroundPosition: 'center center',
             }}
