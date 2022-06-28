@@ -7,13 +7,15 @@ import { CircleLoader } from 'react-spinners';
 type Props = {
   title: string;
   url: string;
-  image: string;
+  image: string | undefined;
 };
 
 const GridItem = ({ title, url, image }: Props) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!image) return setLoading(false);
+
     var img = new Image();
     img.onload = function () {
       setLoading(false);
@@ -33,14 +35,16 @@ const GridItem = ({ title, url, image }: Props) => {
           background: 'rgba(0,0,0,0.7)',
         }}
       >
+        <a className="text-xl mb-2">{title}</a>
         {loading ? (
           <div className="flex justify-center items-center">
             <CircleLoader size="50px" color="#A2821A" />
           </div>
         ) : (
           <>
-            <a className="text-xl mb-2">{title}</a>
-            <Img src={image} width="100%" height="100%" objectFit="contain" />
+            {image && (image.startsWith('/') || image.startsWith('http')) && (
+              <Img src={image} width="100%" height="100%" objectFit="contain" />
+            )}
           </>
         )}
       </motion.div>

@@ -31,8 +31,8 @@ const menu = [
     icon: <MdLocationOn className="text-[#A29438]" />,
   },
   {
-    url: 'recaps',
-    label: 'Recaps',
+    url: 'notes',
+    label: 'Notes',
     icon: <FaJournalWhills className="text-[#A29438]" />,
   },
 ];
@@ -72,13 +72,14 @@ const Navbar = (props: Props) => {
         <ul className="hidden sm:flex items-center text-white space-x-5 text-lg">
           {menu.map((item) => (
             <li
+              key={item.label}
               className={
                 router.asPath.includes(item.url)
                   ? 'border-b border-[#A29438]'
                   : ''
               }
             >
-              <Link href={`/${item.url}/1`}>
+              <Link href={`/list/${item.url}/1`}>
                 <a className="flex items-center justify-center space-x-2">
                   {item.icon}
                   <span>{item.label}</span>

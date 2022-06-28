@@ -114,6 +114,21 @@ const recaps = [
 ]
 
 async function main() {
+  const recaps = await prisma.recap.findMany();
+
+  recaps.forEach(async (recap) => {
+    const { id, ...data } = recap;
+
+    const newNote = {
+      name: data.title || '',
+      description: data.text || ''
+    }
+
+    await prisma.note.create({
+      data: newNote
+    })
+  })
+
   // const salt = await bcrypt.genSalt(10);
 
   // const email = process.env.ADMIN_EMAIL as string
