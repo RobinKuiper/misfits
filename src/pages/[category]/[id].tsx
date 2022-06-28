@@ -9,6 +9,51 @@ import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import Layout from '../../components/Layout';
 import { Item } from '../../interfaces/Item';
 import { TABLES } from '../../utils/constants';
+import dynamic from 'next/dynamic';
+
+import 'react-quill/dist/quill.snow.css';
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+
+const modules = {
+  toolbar: [
+    [{ header: '1' }, { header: '2' }, { font: [] }],
+    [{ size: [] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [
+      { list: 'ordered' },
+      { list: 'bullet' },
+      { indent: '-1' },
+      { indent: '+1' },
+    ],
+    ['link', 'image', 'video'],
+    ['clean'],
+  ],
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: false,
+  },
+};
+/*
+ * Quill editor formats
+ * See https://quilljs.com/docs/formats/
+ */
+const formats = [
+  'header',
+  'font',
+  'size',
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'blockquote',
+  'list',
+  'bullet',
+  'indent',
+  'link',
+  'image',
+  'video',
+];
 
 type Props = {
   item: Item;
@@ -204,27 +249,29 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
                   </h1>
                 )}
                 {editting ? (
-                  <textarea
-                    className="text-black p-3 w-full h-96"
-                    name="description"
-                    defaultValue={item.description}
-                    onChange={handleTextareaChange}
-                  />
+                  // <textarea
+                  //   className="text-black p-3 w-full h-96"
+                  //   name="description"
+                  //   defaultValue={item.description}
+                  //   onChange={handleTextareaChange}
+                  // />
+                  <div className="w-full">
+                    <ReactQuill
+                      theme="snow"
+                      defaultValue={item.description}
+                      onChange={setDescription}
+                      className="bg-white text-black h-96 unreset"
+                      modules={modules}
+                      formats={formats}
+                    />
+                  </div>
                 ) : (
                   <span
-                    className="space-y-5"
+                    className="unreset"
                     dangerouslySetInnerHTML={{
                       __html: item.description,
                     }}
                   ></span>
-                )}
-                {editting && (
-                  <button
-                    className="bg-orange-300 p-2 text-black font-bold w-full"
-                    onClick={handleSave}
-                  >
-                    Save
-                  </button>
                 )}
               </div>
 
@@ -234,11 +281,11 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
                 editting) && (
                 <div className="w-full sm:w-1/2 relative sm:mx-20 h-64 sm:h-full">
                   {editting ? (
-                    <>
+                    <div className="space-y-5">
                       <input
                         type="text"
                         defaultValue={item.image}
-                        className="text-black p-3 w-full mb-5"
+                        className="text-black p-3 w-full"
                         name="image"
                         onChange={handleChange}
                       />
@@ -252,7 +299,13 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
                         />
                         <label className="text-3xl">Published</label>
                       </div>
-                    </>
+                      <button
+                        className="bg-orange-300 p-2 text-black font-bold w-full"
+                        onClick={handleSave}
+                      >
+                        Save
+                      </button>
+                    </div>
                   ) : (
                     <div className="shadow-2xl h-full">
                       {item.image && (

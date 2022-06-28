@@ -1,4 +1,4 @@
-import '../styles/tailwind.css';
+import '../styles/tailwind.scss';
 import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 import NProgress from 'nprogress'; //nprogress module
