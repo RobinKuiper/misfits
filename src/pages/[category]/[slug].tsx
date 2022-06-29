@@ -26,6 +26,7 @@ const Item = ({ item, category, prevSlug, nextSlug, edit }: Props) => {
   const [description, setDescription] = useState(item.description);
   const [image, setImage] = useState(item.image);
   const [published, setPublished] = useState(item.published);
+  const [featured, setFeatured] = useState(item.featured);
 
   useEffect(() => {
     setName(item.name);
@@ -92,9 +93,6 @@ const Item = ({ item, category, prevSlug, nextSlug, edit }: Props) => {
       },
       body: JSON.stringify({
         id: item.id,
-        name,
-        description,
-        image,
         published: !published,
       }),
     };
@@ -102,6 +100,27 @@ const Item = ({ item, category, prevSlug, nextSlug, edit }: Props) => {
     const response = await fetch(endpoint, options);
     const result = await response.json();
     setPublished(!published);
+  };
+
+  const toggleFeatured = async () => {
+    if (!session.data) return;
+
+    const endpoint = '/api/item';
+
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: item.id,
+        featured: !featured,
+      }),
+    };
+
+    const response = await fetch(endpoint, options);
+    const result = await response.json();
+    setFeatured(!featured);
   };
 
   const handleSave = async () => {
@@ -120,6 +139,7 @@ const Item = ({ item, category, prevSlug, nextSlug, edit }: Props) => {
         description,
         image,
         published,
+        featured,
       }),
     };
 
@@ -138,6 +158,13 @@ const Item = ({ item, category, prevSlug, nextSlug, edit }: Props) => {
       <div className="sm:flex flex-row h-full relative">
         {session.data && (
           <div className="absolute bottom-0 right-0 flex space-x-5">
+            <button
+              onClick={toggleFeatured}
+              className="bg-black text-white p-3 rounded"
+            >
+              {featured ? 'Unset Featured' : 'Set Featured'}
+            </button>
+
             <button
               onClick={togglePublish}
               className="bg-black text-white p-3 rounded"

@@ -57,12 +57,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const items = await prisma.piece.findMany({
     where: {
       published: true,
+      featured: true,
       image: {
         startsWith: '/',
       },
     },
   });
   const item = items[Math.floor(Math.random() * items.length)];
+
+  console.log(item);
 
   return {
     props: {

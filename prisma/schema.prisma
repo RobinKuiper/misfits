@@ -19,54 +19,6 @@ model User {
   password    String
 }
 
-model Character {
-  id          Int   @id @default(autoincrement())
-  name        String
-  description String
-  image       String
-  published   Boolean @default(false)
-}
-
-model Location{
-  id          Int   @id @default(autoincrement())
-  name        String
-  description String
-  image       String
-  published   Boolean @default(false)
-}
-
-model Npc{
-  id          Int   @id @default(autoincrement())
-  name        String
-  description String
-  image       String
-  published   Boolean @default(false)
-}
-
-model Item{
-  id          Int   @id @default(autoincrement())
-  name        String
-  description String
-  image       String
-  published   Boolean @default(false)
-}
-
-model Recap{
-  id          Int   @id @default(autoincrement())
-  title       String?   @unique
-  text        String
-  // createAt    DateTime @default(now())
-}
-
-model Note{
-  id          Int   @id @default(autoincrement())
-  name        String
-  description String
-  image       String
-  published   Boolean @default(false)
-}
-
-
 model Category{
   id          Int         @id @default(autoincrement())
   label       String      
@@ -83,4 +35,5 @@ model Piece{
   published   Boolean     @default(false)
   category    Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId  Int
+  featured    Boolean     @default(true)
 }

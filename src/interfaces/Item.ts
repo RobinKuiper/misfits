@@ -6,4 +6,5 @@ export interface Item {
   image: string;
   published: boolean;
   categoryId: number;
+  featured: boolean;
 }
