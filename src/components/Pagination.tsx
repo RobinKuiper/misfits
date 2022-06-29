@@ -4,7 +4,7 @@ import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 type Props = {
   currentPage: number;
   totalPages: number;
-  urlPrefix: string;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const Pagination = (props: Props) => {
@@ -18,11 +18,9 @@ const Pagination = (props: Props) => {
     <div className="sticky bottom-28 flex items-center justify-center space-x-5 text-xl">
       {props.currentPage > 1 ? (
         <div>
-          <Link href={`${props.urlPrefix}/${props.currentPage - 1}`}>
-            <a>
-              <MdArrowBackIos />
-            </a>
-          </Link>
+          <button onClick={() => props.setPage(props.currentPage - 1)}>
+            <MdArrowBackIos />
+          </button>
         </div>
       ) : (
         <span className="text-zinc-500">
@@ -34,19 +32,15 @@ const Pagination = (props: Props) => {
           {page === props.currentPage ? (
             <span className="text-zinc-500">{page}</span>
           ) : (
-            <Link href={`${props.urlPrefix}/${page}`}>
-              <a>{page}</a>
-            </Link>
+            <button onClick={() => props.setPage(page)}>{page}</button>
           )}
         </div>
       ))}
       {props.totalPages > props.currentPage ? (
         <div>
-          <Link href={`${props.urlPrefix}/${props.currentPage + 1}`}>
-            <a>
-              <MdArrowForwardIos />
-            </a>
-          </Link>
+          <button onClick={() => props.setPage(props.currentPage + 1)}>
+            <MdArrowForwardIos />
+          </button>
         </div>
       ) : (
         <span className="text-zinc-500">

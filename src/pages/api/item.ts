@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
 import prisma from "../../lib/prisma";
 import { slugify } from "../../utils/urlHelpers";
@@ -8,18 +9,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!session && req.method !== 'GET') res.status(401).send({ error: "Not authorized" });
 
   switch (req.method) {
+    case 'GET':
+      return getAll(req, res, session);
+      break;
+
     case 'POST':
       return add(req, res);
       break;
 
-      case 'PUT':
+    case 'PUT':
       return update(req, res);
       break;
 
-      case 'DELETE':
+    case 'DELETE':
       return remove(req, res);
       break;
   }
+}
+
+async function getAll(req: NextApiRequest, res: NextApiResponse, session: Session | null) {
+  const categoryId = Number(req.query.categoryId);
+  const query = req.query.query.toString();
+
+  const where = session
+    ? { categoryId, name: { contains: query } }
+    : { categoryId, published: true, name: { contains: query } };
+
+  const items = await prisma.piece.findMany({ where })
+
+  return res.status(200).send(items);
 }
 
 type Item = {

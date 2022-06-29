@@ -5,40 +5,45 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
 import { FaMapMarkedAlt } from 'react-icons/fa';
-import GridItem from '../../../components/GridItem';
-import Layout from '../../../components/Layout';
-import Pagination from '../../../components/Pagination';
-import { Item } from '../../../interfaces/Item';
-import prisma from '../../../lib/prisma';
+import GridItem from '../../components/GridItem';
+import Layout from '../../components/Layout';
+import Pagination from '../../components/Pagination';
+import { Item } from '../../interfaces/Item';
+import prisma from '../../lib/prisma';
 
 const perPage = 12;
 
 type Props = {
   items: Item[];
-  currentPage: number;
-  totalPages: number;
   category: string;
   categoryId: number;
 };
 
-const List = ({
-  items,
-  currentPage,
-  totalPages,
-  category,
-  categoryId,
-}: Props) => {
+const List = ({ items, category, categoryId }: Props) => {
   const session = useSession();
   const [query, setQuery] = useState('');
   const [shownItems, setShownItems] = useState(items);
+  const [totalPages, setTotalPages] = useState(Number(items?.length) / perPage);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    setShownItems(() =>
-      items.filter((item) =>
-        item.name.toLowerCase().includes(query.toLowerCase())
-      )
+    const fItems = items.filter((item) =>
+      item.name.toLowerCase().includes(query.toLowerCase())
     );
-  }, [items, query]);
+
+    const sItems = fItems.slice(
+      perPage * currentPage - perPage,
+      perPage * currentPage
+    );
+
+    setShownItems(sItems);
+
+    setTotalPages(fItems.length / perPage);
+  }, [query, currentPage, items]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [query, items]);
 
   const handleCreate = async () => {
     if (!session.data) return;
@@ -63,7 +68,7 @@ const List = ({
   return (
     <Layout>
       <Head>
-        <title>{category} - Misfits</title>
+        <title>{category.toUpperCase()} - Misfits</title>
       </Head>
 
       <div className="flex flex-row h-full relative">
@@ -110,7 +115,10 @@ const List = ({
                         className="border-2 border-zinc-800 shadow rounded
                       cursor-pointer flex flex-col px-3 py-2 w-[30%]"
                         style={{
-                          background: 'rgba(0,0,0,0.7)',
+                          background: item.published
+                            ? 'rgba(0,0,0,0.7)'
+                            : '#f1f1f1',
+                          color: item.published ? 'white' : 'black',
                         }}
                       >
                         <a>{item.name}</a>
@@ -134,7 +142,7 @@ const List = ({
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
-              urlPrefix={`/list/${category}`}
+              setPage={setCurrentPage}
             />
           </div>
         </div>
@@ -146,6 +154,7 @@ const List = ({
 export const getServerSideProps: GetServerSideProps = async ({
   params,
   req,
+  query,
 }) => {
   const session = await getSession({ req });
 
@@ -154,8 +163,12 @@ export const getServerSideProps: GetServerSideProps = async ({
   });
 
   const where = session
-    ? { categoryId: category?.id }
-    : { categoryId: category?.id, published: true };
+    ? { categoryId: category?.id, name: { contains: query?.s as string } }
+    : {
+        categoryId: category?.id,
+        published: true,
+        name: { contains: query?.s as string },
+      };
 
   const items = await prisma.piece.findMany({
     where,
@@ -164,10 +177,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   return {
     props: {
-      items: items?.slice(perPage * page - perPage, perPage * page),
-      totalCount: items?.length,
-      currentPage: page,
-      totalPages: Number(items?.length) / perPage,
+      items,
       category: params?.category,
       categoryId: category?.id,
     },

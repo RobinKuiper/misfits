@@ -79,7 +79,7 @@ const Navbar = (props: Props) => {
                   : ''
               }
             >
-              <Link href={`/list/${item.url}/1`}>
+              <Link href={`/list/${item.url}`}>
                 <a className="flex items-center justify-center space-x-2">
                   {item.icon}
                   <span>{item.label}</span>

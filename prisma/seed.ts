@@ -1,6 +1,8 @@
 import prisma from '../src/lib/prisma';
 
 async function main() {
+  return;
+  
   const npcs = await prisma.piece.findMany({
     where: {
       category: {
