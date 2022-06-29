@@ -9,7 +9,7 @@ import GridItem from '../../../components/GridItem';
 import Layout from '../../../components/Layout';
 import Pagination from '../../../components/Pagination';
 import { Item } from '../../../interfaces/Item';
-import { TABLES } from '../../../utils/constants';
+import prisma from '../../../lib/prisma';
 
 const perPage = 12;
 
@@ -18,9 +18,16 @@ type Props = {
   currentPage: number;
   totalPages: number;
   category: string;
+  categoryId: number;
 };
 
-const List = ({ items, currentPage, totalPages, category }: Props) => {
+const List = ({
+  items,
+  currentPage,
+  totalPages,
+  category,
+  categoryId,
+}: Props) => {
   const session = useSession();
   const [query, setQuery] = useState('');
   const [shownItems, setShownItems] = useState(items);
@@ -44,13 +51,13 @@ const List = ({ items, currentPage, totalPages, category }: Props) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        type: category,
+        categoryId,
       }),
     };
 
     const response = await fetch(endpoint, options);
     const result = await response.json();
-    Router.push(`/${category}/${result.id}?edit=true`);
+    Router.push(`/${category}/${result.slug}?edit=true`);
   };
 
   return (
@@ -98,7 +105,7 @@ const List = ({ items, currentPage, totalPages, category }: Props) => {
               {category === 'notes' ? (
                 <ul className="space-y-2">
                   {shownItems.map((item) => (
-                    <Link href={`/notes/${item.id}`}>
+                    <Link href={`/notes/${item.slug}`}>
                       <li
                         className="border-2 border-zinc-800 shadow rounded
                       cursor-pointer flex flex-col px-3 py-2 w-[30%]"
@@ -117,7 +124,7 @@ const List = ({ items, currentPage, totalPages, category }: Props) => {
                     <GridItem
                       key={item.id}
                       item={item}
-                      url={`/${category}/${item.id}`}
+                      url={`/${category}/${item.slug}`}
                     />
                   ))}
                 </div>
@@ -142,12 +149,15 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const session = await getSession({ req });
 
-  const ref = TABLES.find((table) => table.id === params?.category);
-  const db = ref?.table;
+  const category = await prisma.category.findUnique({
+    where: { slug: params?.category as string },
+  });
 
-  const where = session ? {} : { published: true };
+  const where = session
+    ? { categoryId: category?.id }
+    : { categoryId: category?.id, published: true };
 
-  const items = await db?.findMany({
+  const items = await prisma.piece.findMany({
     where,
   });
   const page = Number(params?.page) || 1;
@@ -159,6 +169,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       currentPage: page,
       totalPages: Number(items?.length) / perPage,
       category: params?.category,
+      categoryId: category?.id,
     },
   };
 };

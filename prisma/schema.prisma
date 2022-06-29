@@ -65,3 +65,22 @@ model Note{
   image       String
   published   Boolean @default(false)
 }
+
+
+model Category{
+  id          Int         @id @default(autoincrement())
+  label       String      
+  slug        String      @unique()
+  items       Piece[]
+}
+
+model Piece{
+  id          Int         @id @default(autoincrement())
+  name        String
+  slug        String      @default("")
+  description String
+  image       String
+  published   Boolean     @default(false)
+  category    Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId  Int
+}

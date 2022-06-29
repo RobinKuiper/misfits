@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,18 +8,18 @@ import React, { useEffect, useState } from 'react';
 import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import Layout from '../../components/Layout';
 import { Item } from '../../interfaces/Item';
-import { TABLES } from '../../utils/constants';
 import Tiptap from '../../components/Tiptap';
+import prisma from '../../lib/prisma';
 
 type Props = {
   item: Item;
   category: string;
-  nextId: number;
-  prevId: number;
+  nextSlug: number;
+  prevSlug: number;
   edit: boolean;
 };
 
-const Item = ({ item, category, prevId, nextId, edit }: Props) => {
+const Item = ({ item, category, prevSlug, nextSlug, edit }: Props) => {
   const [editting, setEditting] = useState(edit);
   const session = useSession();
   const [name, setName] = useState(item.name);
@@ -71,7 +71,6 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
       },
       body: JSON.stringify({
         id: item.id,
-        type: category,
       }),
     };
 
@@ -97,7 +96,6 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
         description,
         image,
         published: !published,
-        type: category,
       }),
     };
 
@@ -122,14 +120,13 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
         description,
         image,
         published,
-        type: category,
       }),
     };
 
     const response = await fetch(endpoint, options);
     const result = await response.json();
     setEditting(false);
-    Router.push(`/${category}/${item.id}`);
+    Router.push(`/${category}/${item.slug}`);
   };
 
   return (
@@ -164,7 +161,7 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
           </div>
         )}
 
-        <Link href={`/${category}/${nextId}`}>
+        <Link href={`/${category}/${nextSlug}`}>
           <div className="hidden sm:flex w-1/12 text-white justify-center items-center text-6xl cursor-pointer">
             <a>
               <MdArrowBackIos />
@@ -265,7 +262,7 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
           </div>
         </div>
 
-        <Link href={`/${category}/${prevId}`}>
+        <Link href={`/${category}/${prevSlug}`}>
           <div className="hidden w-1/12 text-white sm:flex justify-center items-center text-6xl cursor-pointer">
             <a>
               <MdArrowForwardIos />
@@ -280,18 +277,23 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
 export const getServerSideProps: GetServerSideProps = async ({
   params,
   query,
+  req,
 }) => {
-  const ref = TABLES.find((table) => table.id === params?.category);
+  const session = await getSession({ req });
 
-  if (!ref) return { props: {} };
+  const category = await prisma.category.findUnique({
+    where: { slug: params?.category as string },
+  });
 
-  const db = ref.table;
+  const where = session
+    ? { categoryId: category?.id }
+    : { categoryId: category?.id, published: true };
 
-  if (!db) return { props: {} };
+  const items = await prisma.piece.findMany({
+    where,
+  });
 
-  const items = await db.findMany();
-
-  const item = items.find((item) => Number(item.id) === Number(params?.id));
+  const item = items.find((item) => item.slug === params?.slug);
 
   if (!item)
     return {
@@ -300,18 +302,18 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   const currentIndex = items.indexOf(item);
 
-  const nextId =
-    items[currentIndex + 1 <= items.length - 1 ? currentIndex + 1 : 0].id;
+  const nextSlug =
+    items[currentIndex + 1 <= items.length - 1 ? currentIndex + 1 : 0].slug;
 
-  const prevId =
-    items[currentIndex - 1 >= 0 ? currentIndex - 1 : items.length - 1].id;
+  const prevSlug =
+    items[currentIndex - 1 >= 0 ? currentIndex - 1 : items.length - 1].slug;
 
   return {
     props: {
       item,
       category: params?.category,
-      nextId,
-      prevId,
+      nextSlug,
+      prevSlug,
       edit: query.edit === 'true',
     },
   };

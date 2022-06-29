@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
+import prisma from "../../lib/prisma";
 import { TABLES } from "../../utils/constants";
+import { slugify } from "../../utils/urlHelpers";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req })
@@ -26,54 +28,29 @@ type Item = {
   name: string;
   image: string;
   description: string; 
-  type: string;
 }
 
 async function add(req: NextApiRequest, res: NextApiResponse) {
-  const { type }: { type: string } = req.body;
-  const ref = TABLES.find(table => table.id === type);
+  const { categoryId }: { categoryId: string } = req.body;
 
-  if(!ref) return res.status(500)
-
-  const db = ref.table;
-
-  const newItem = await db.create({
+  const newItem = await prisma.piece.create({
     data: {
-      name: 'dafdsfsgfg',
+      name: new Date().toISOString(),
+      slug: slugify(new Date().toISOString()),
       description: '',
-      image: ''
+      image: '',
+      published: false,
+      categoryId: Number(categoryId)
     },
   });
 
   return res.status(200).send(newItem);
 }
 
-// async function add(req: NextApiRequest, res: NextApiResponse) {
-//   const { type, id, ...item }: Item = req.body;
-//   const ref = TABLES.find(table => table.id === type);
-
-//   if(!ref) return res.status(500)
-
-//   const db = ref.table;
-
-//   const newItem = await db.create({
-//     data: {
-//       ...item,
-//     },
-//   });
-
-//   return res.status(200).send(newItem);
-// }
-
 async function update(req: NextApiRequest, res: NextApiResponse) {
-  const { type, id, ...item }: Item = req.body;
-  const ref = TABLES.find(table => table.id === type);
+  const { id, ...item }: Item = req.body;
 
-  if(!ref) return res.status(500)
-
-  const db = ref.table;
-
-  const newItem = await db.update({
+  const newItem = await prisma.piece.update({
     where: {
       id: Number(id)
     },
@@ -86,14 +63,9 @@ async function update(req: NextApiRequest, res: NextApiResponse) {
 }
 
 async function remove(req: NextApiRequest, res: NextApiResponse) {
-  const { type, id, ...item }: Item = req.body;
-  const ref = TABLES.find(table => table.id === type);
+  const { id, ...item }: Item = req.body;
 
-  if(!ref) return res.status(500)
-
-  const db = ref.table;
-
-  const newItem = await db.delete({
+  const newItem = await prisma.piece.delete({
     where: {
       id: Number(id)
     },

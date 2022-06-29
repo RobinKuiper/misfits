@@ -116,8 +116,140 @@ const recaps = [
   }
 ]
 
+const slugify = (title: string) => title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
 async function main() {
+  const cats = ['characters', 'locations', 'items', 'notes', 'npcs']
+
+  cats.forEach(async (cat: string) => {
+    await prisma.category.create({
+      data: {
+        label: cat,
+        slug: slugify(cat)
+      }
+    })
+  })
+
+  const characters = await prisma.character.findMany();
+  const locations = await prisma.location.findMany();
+  const items = await prisma.item.findMany();
+  const npcs = await prisma.npc.findMany();
+  const notes = await prisma.note.findMany();
+  
+
+  characters.forEach(async (item) => {
+    const category = await prisma.category.findUnique({
+      where: {
+        slug: 'characters'
+      }
+    })
+
+    if(!category) return;
+
+    const newItem = {
+      name: item.name,
+      slug: slugify(item.name),
+      description: item.description,
+      image: item.image,
+      published: item.published,
+      categoryId: category.id
+    }
+    await prisma.piece.create({
+      data: newItem
+    });
+  })
+
+  locations.forEach(async (item) => {
+    const category = await prisma.category.findUnique({
+      where: {
+        slug: 'locations'
+      }
+    })
+
+    if(!category) return;
+
+    const newItem = {
+      name: item.name,
+      slug: slugify(item.name),
+      description: item.description,
+      image: item.image,
+      published: item.published,
+      categoryId: category.id
+    }
+    await prisma.piece.create({
+      data: newItem
+    });
+  })
+
+  notes.forEach(async (item) => {
+    const category = await prisma.category.findUnique({
+      where: {
+        slug: 'notes'
+      }
+    })
+
+    if(!category) return;
+
+    const newItem = {
+      name: item.name,
+      slug: slugify(item.name),
+      description: item.description,
+      image: item.image,
+      published: item.published,
+      categoryId: category.id
+    }
+    await prisma.piece.create({
+      data: newItem
+    });
+  })
+
+  npcs.forEach(async (item) => {
+    const category = await prisma.category.findUnique({
+      where: {
+        slug: 'npcs'
+      }
+    })
+
+    if(!category) return;
+
+    const newItem = {
+      name: item.name,
+      slug: slugify(item.name),
+      description: item.description,
+      image: item.image,
+      published: item.published,
+      categoryId: category.id
+    }
+    await prisma.piece.create({
+      data: newItem
+    });
+  })
+
+  items.forEach(async (item) => {
+    const category = await prisma.category.findUnique({
+      where: {
+        slug: 'items'
+      }
+    })
+
+    if(!category) return;
+
+    const newItem = {
+      name: item.name,
+      slug: slugify(item.name),
+      description: item.description,
+      image: item.image,
+      published: item.published,
+      categoryId: category.id
+    }
+    await prisma.piece.create({
+      data: newItem
+    });
+  })
+
   return;
+
+  await prisma.piece.deleteMany()
   
   const salt = await bcrypt.genSalt(10);
 
