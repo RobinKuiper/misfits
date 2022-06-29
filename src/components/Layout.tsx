@@ -58,14 +58,14 @@ const Layout = (props: Props) => {
       <motion.div
         className="relative"
         animate={{
-          scale: introWatched ? 1 : [1, 8.5, 1],
+          scale: introWatched ? 1 : [1, 8.5, 1], // TODO:
           transition: {
-            duration: 6,
+            duration: 6, // TODO:
             delay: initialDelay + 1.2,
           },
         }}
         onAnimationComplete={() => {
-          sessionStorage.setItem('intro', 'yes');
+          sessionStorage.setItem('intro', 'yes'); // TODO:
         }}
       >
         {!introWatched && (
@@ -77,11 +77,11 @@ const Layout = (props: Props) => {
               backgroundPosition: 'center center',
               backgroundRepeat: 'no-repeat',
               // backgroundAttachment: 'fixed',
-              zIndex: 10,
+              zIndex: 98,
             }}
             animate={{
-              opacity: introWatched ? 0 : [1, 0, 0],
-              display: introWatched ? 'none' : ['block', 'block', 'none'],
+              opacity: introWatched ? 0 : [1, 0, 0], // TODO:
+              display: introWatched ? 'none' : ['block', 'block', 'none'], // TODO:
               transition: {
                 delay: initialDelay + 1.2 + 3,
                 duration: 3,
@@ -106,11 +106,40 @@ const Layout = (props: Props) => {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center center',
                   backgroundRepeat: 'no-repeat',
-                  zIndex: 15,
+                  zIndex: 99,
                   // backgroundAttachment: 'fixed',
                 }}
               ></div>
             </motion.div>
+
+            {/* <motion.div
+              className="absolute top-0 left-0 w-full h-screen overflow-hidden"
+              animate={{
+                top: ['0px', '150px', '300px'],
+                rotate: ['0deg', '-30deg', '-60deg'],
+                left: ['0px', '-60px', '-25px'],
+                transition: {
+                  ease: 'linear',
+                  duration: 3,
+                  delay: initialDelay,
+                },
+              }}
+              style={{
+                transformOrigin: 'center center',
+              }}
+            >
+              <div
+                className="h-full"
+                style={{
+                  background: 'url(/images/gatehandle.webp)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center center',
+                  backgroundRepeat: 'no-repeat',
+                  zIndex: 99,
+                  // backgroundAttachment: 'fixed',
+                }}
+              ></div>
+            </motion.div> */}
           </motion.div>
         )}
 
