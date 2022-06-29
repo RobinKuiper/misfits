@@ -9,52 +9,7 @@ import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import Layout from '../../components/Layout';
 import { Item } from '../../interfaces/Item';
 import { TABLES } from '../../utils/constants';
-import dynamic from 'next/dynamic';
-
-import 'react-quill/dist/quill.snow.css';
 import Tiptap from '../../components/Tiptap';
-
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-
-const modules = {
-  toolbar: [
-    [{ header: '1' }, { header: '2' }, { font: [] }],
-    [{ size: [] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [
-      { list: 'ordered' },
-      { list: 'bullet' },
-      { indent: '-1' },
-      { indent: '+1' },
-    ],
-    ['link', 'image', 'video'],
-    ['clean'],
-  ],
-  clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
-    matchVisual: false,
-  },
-};
-/*
- * Quill editor formats
- * See https://quilljs.com/docs/formats/
- */
-const formats = [
-  'header',
-  'font',
-  'size',
-  'bold',
-  'italic',
-  'underline',
-  'strike',
-  'blockquote',
-  'list',
-  'bullet',
-  'indent',
-  'link',
-  'image',
-  'video',
-];
 
 type Props = {
   item: Item;
@@ -81,15 +36,6 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
 
   const toggleEdit = () => {
     if (session.data) setEditting(!editting);
-  };
-
-  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    switch (e.target.name) {
-      case 'description':
-        setDescription(e.target.value);
-        console.log(description);
-        break;
-    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -237,7 +183,10 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
                     type="text"
                     defaultValue={item.name}
                     name="name"
-                    className="text-black p-3 w-full mb-5"
+                    // className="text-black p-3 w-full mb-5"
+                    className={`text-4xl mb-5 bg-transparent ${
+                      published ? 'text-[#B29438]' : 'text-red-600'
+                    }`}
                     onChange={handleChange}
                   />
                 ) : (
@@ -250,22 +199,11 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
                   </h1>
                 )}
                 {editting ? (
-                  // <textarea
-                  //   className="text-black p-3 w-full h-96"
-                  //   name="description"
-                  //   defaultValue={item.description}
-                  //   onChange={handleTextareaChange}
-                  // />
                   <div className="w-full">
-                    {/* <ReactQuill
-                      theme="snow"
-                      defaultValue={item.description}
-                      onChange={setDescription}
-                      className="bg-white text-black h-96 unreset"
-                      modules={modules}
-                      formats={formats}
-                    /> */}
-                    <Tiptap content={item.description} />
+                    <Tiptap
+                      content={item.description}
+                      setText={setDescription}
+                    />
                   </div>
                 ) : (
                   <span
@@ -309,14 +247,16 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
                       </button>
                     </div>
                   ) : (
-                    <div className="shadow-2xl h-full">
-                      {item.image && (
-                        <Image
-                          src={item.image}
-                          layout="fill"
-                          objectFit="contain"
-                        />
-                      )}
+                    <div className="shadow-2xl h-full relative">
+                      <div className="fixed w-[30%] h-[50%]">
+                        {item.image && (
+                          <Image
+                            src={item.image}
+                            layout="fill"
+                            objectFit="contain"
+                          />
+                        )}
+                      </div>
                     </div>
                   )}
                 </div>

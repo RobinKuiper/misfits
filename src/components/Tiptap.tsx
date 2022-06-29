@@ -1,14 +1,54 @@
-import { BubbleMenu, EditorContent, useEditor } from '@tiptap/react';
+import { BubbleMenu, Editor, EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import {
+  FaBold,
+  FaItalic,
+  FaListOl,
+  FaListUl,
+  FaStrikethrough,
+} from 'react-icons/fa';
+
+const buttons = [
+  {
+    action: (editor: Editor) => editor.chain().focus().toggleBold().run(),
+    icon: <FaBold />,
+    tag: 'bold',
+  },
+  {
+    action: (editor: Editor) => editor.chain().focus().toggleItalic().run(),
+    icon: <FaItalic />,
+    tag: 'italic',
+  },
+  {
+    action: (editor: Editor) => editor.chain().focus().toggleStrike().run(),
+    icon: <FaStrikethrough />,
+    tag: 'strike',
+  },
+  {
+    action: (editor: Editor) => editor.chain().focus().toggleBulletList().run(),
+    icon: <FaListUl />,
+    tag: 'ul',
+  },
+  {
+    action: (editor: Editor) =>
+      editor.chain().focus().toggleOrderedList().run(),
+    icon: <FaListOl />,
+    tag: 'ol',
+  },
+];
 
 type Props = {
   content: string;
+  setText: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const Tiptap = ({ content }: Props) => {
+const Tiptap = ({ content, setText }: Props) => {
   const editor = useEditor({
     extensions: [StarterKit],
     content,
+    onUpdate: ({ editor }) => {
+      setText(editor.getHTML());
+    },
   });
 
   return (
@@ -17,44 +57,21 @@ const Tiptap = ({ content }: Props) => {
         <BubbleMenu
           editor={editor}
           tippyOptions={{ duration: 100 }}
-          className="space-x-2 bg-white text-black"
+          className="bg-white text-black"
         >
-          <button
-            onClick={() => editor.chain().focus().toggleBold().run()}
-            className={editor.isActive('bold') ? 'is-active' : ''}
-          >
-            bold
-          </button>
-          <button
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-            className={editor.isActive('italic') ? 'is-active' : ''}
-          >
-            italic
-          </button>
-          <button
-            onClick={() => editor.chain().focus().toggleStrike().run()}
-            className={editor.isActive('strike') ? 'is-active' : ''}
-          >
-            strike
-          </button>
-          <button
-            onClick={() =>
-              editor
-                .chain()
-                .focus()
-                .toggleList('bullet_list', 'list_item')
-                .run()
-            }
-            className={editor.isActive('ul') ? 'is-active' : ''}
-          >
-            ul
-          </button>
+          {buttons.map((button) => (
+            <button
+              onClick={() => button.action(editor)}
+              className={`p-2 hover:bg-[#f1f1f1] ${
+                editor.isActive(button.tag) ? 'is-active' : ''
+              }`}
+            >
+              {button.icon}
+            </button>
+          ))}
         </BubbleMenu>
       )}
-      <EditorContent
-        editor={editor}
-        className="unreset bg-white text-black p-1"
-      />
+      <EditorContent editor={editor} className="unreset  p-1" />
     </>
   );
 };
