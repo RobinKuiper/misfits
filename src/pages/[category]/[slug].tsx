@@ -57,6 +57,10 @@ const Item = ({ item, category, prevSlug, nextSlug, edit }: Props) => {
       case 'published':
         setPublished(e.target.checked);
         break;
+
+      case 'featured':
+        setFeatured(e.target.checked);
+        break;
     }
   };
 
@@ -262,6 +266,16 @@ const Item = ({ item, category, prevSlug, nextSlug, edit }: Props) => {
                           className="w-6 h-6 text-green-600 border-0 rounded-md focus:ring-0"
                         />
                         <label className="text-3xl">Published</label>
+                      </div>
+                      <div className="space-x-3">
+                        <input
+                          type="checkbox"
+                          defaultChecked={item.featured}
+                          name="featured"
+                          onChange={handleChange}
+                          className="w-6 h-6 text-green-600 border-0 rounded-md focus:ring-0"
+                        />
+                        <label className="text-3xl">Featured</label>
                       </div>
                       <button
                         className="bg-orange-300 p-2 text-black font-bold w-full"
