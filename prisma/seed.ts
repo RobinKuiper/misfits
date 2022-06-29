@@ -119,6 +119,7 @@ const recaps = [
 const slugify = (title: string) => title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 async function main() {
+  return;
   const cats = ['characters', 'locations', 'items', 'notes', 'npcs']
 
   cats.forEach(async (cat: string) => {
