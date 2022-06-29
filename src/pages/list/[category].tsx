@@ -5,7 +5,10 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
 import { FaMapMarkedAlt } from 'react-icons/fa';
+import { GrGrid } from 'react-icons/gr';
 import {
+  BsGrid3X3,
+  BsList,
   BsSortAlphaDown,
   BsSortAlphaDownAlt,
   BsSortDownAlt,
@@ -34,6 +37,12 @@ const List = ({ items, category, categoryId }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState('createdAt');
   const [sortOrder, setSortOrder] = useState('asc');
+  const [preview, setPreview] = useState('grid');
+
+  useEffect(() => {
+    if (category === 'notes') setPreview('list');
+    else setPreview('grid');
+  }, [category]);
 
   useEffect(() => {
     const fItems = items.filter((item) =>
@@ -143,15 +152,33 @@ const List = ({ items, category, categoryId }: Props) => {
                 <div className="w-full">
                   <input
                     type="search"
-                    className="w-full p-3 text-black rounded bg-white"
+                    className="w-full p-3 rounded shadow-2xl shadow-[#3C3C3C] text-white"
+                    style={{
+                      background: 'rgba(0,0,0,0.5)',
+                    }}
                     placeholder="Search..."
                     onChange={(e) => setQuery(e.target.value)}
                   />
                 </div>
 
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center shadow-2xl shadow-[#3C3C3C]">
+                  <button
+                    className="rounded-l p-2 text-white font-bold h-full justify-center items-center flex space-x-2 hover:bg-zinc-300"
+                    style={{
+                      background: 'rgba(0,0,0,0.5)',
+                    }}
+                    onClick={() =>
+                      setPreview((prev) => (prev === 'list' ? 'grid' : 'list'))
+                    }
+                  >
+                    {preview === 'list' ? <BsGrid3X3 /> : <BsList />}
+                  </button>
+
                   <select
-                    className="text-black h-full rounded-l"
+                    className="text-white h-full"
+                    style={{
+                      background: 'rgba(0,0,0,0.5)',
+                    }}
                     defaultValue={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
                   >
@@ -161,7 +188,10 @@ const List = ({ items, category, categoryId }: Props) => {
                   </select>
 
                   <button
-                    className="rounded-r p-2 bg-white text-black font-bold h-full justify-center items-center flex space-x-2 hover:bg-zinc-300"
+                    className="rounded-r p-2 text-white font-bold h-full justify-center items-center flex space-x-2 hover:bg-zinc-300"
+                    style={{
+                      background: 'rgba(0,0,0,0.5)',
+                    }}
                     onClick={() =>
                       setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))
                     }
@@ -171,7 +201,7 @@ const List = ({ items, category, categoryId }: Props) => {
                 </div>
               </div>
 
-              {category === 'notes' ? (
+              {preview === 'list' ? (
                 <ul className="space-y-2">
                   {shownItems.map((item) => (
                     <Link href={`/notes/${item.slug}`}>
