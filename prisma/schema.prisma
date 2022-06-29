@@ -36,4 +36,6 @@ model Piece{
   category    Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId  Int
   featured    Boolean     @default(true)
+  createdAt   DateTime    @default(now()) 
+  updatedAt   DateTime    @default(now()) @updatedAt()
 }

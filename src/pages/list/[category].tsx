@@ -5,6 +5,13 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
 import { FaMapMarkedAlt } from 'react-icons/fa';
+import {
+  BsSortAlphaDown,
+  BsSortAlphaDownAlt,
+  BsSortDownAlt,
+  BsSortNumericDown,
+  BsSortUpAlt,
+} from 'react-icons/bs';
 import GridItem from '../../components/GridItem';
 import Layout from '../../components/Layout';
 import Pagination from '../../components/Pagination';
@@ -25,13 +32,41 @@ const List = ({ items, category, categoryId }: Props) => {
   const [shownItems, setShownItems] = useState(items);
   const [totalPages, setTotalPages] = useState(Number(items?.length) / perPage);
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortBy, setSortBy] = useState('createdAt');
+  const [sortOrder, setSortOrder] = useState('asc');
 
   useEffect(() => {
     const fItems = items.filter((item) =>
       item.name.toLowerCase().includes(query.toLowerCase())
     );
 
-    const sItems = fItems.slice(
+    const sorted = fItems.sort((a, b) => {
+      const value1 = sortOrder === 'asc' ? -1 : 1;
+      const value2 = sortOrder === 'asc' ? 1 : -1;
+
+      switch (sortBy) {
+        case 'name':
+          return a.name.toLowerCase() < b.name.toLowerCase() ? value1 : value2;
+          break;
+
+        case 'createdAt':
+          return new Date(a.createdAt) < new Date(b.createdAt)
+            ? value1
+            : value2;
+          break;
+
+        case 'updatedAt':
+          return new Date(a.updatedAt) < new Date(b.updatedAt)
+            ? value1
+            : value2;
+          break;
+
+        default:
+          return 0;
+      }
+    });
+
+    const sItems = sorted.slice(
       perPage * currentPage - perPage,
       perPage * currentPage
     );
@@ -39,7 +74,7 @@ const List = ({ items, category, categoryId }: Props) => {
     setShownItems(sItems);
 
     setTotalPages(fItems.length / perPage);
-  }, [query, currentPage, items]);
+  }, [query, currentPage, items, sortOrder, sortBy]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -65,6 +100,14 @@ const List = ({ items, category, categoryId }: Props) => {
     Router.push(`/${category}/${result.slug}?edit=true`);
   };
 
+  const changeSort = (by: string) => {
+    if (sortBy === by) {
+      setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortBy(by);
+    }
+  };
+
   return (
     <Layout>
       <Head>
@@ -86,13 +129,13 @@ const List = ({ items, category, categoryId }: Props) => {
         <div className="text-white w-full p-4 space-y-5">
           <div className="h-full relative">
             <div className="h-full relative">
-              <div className={`mb-5 ${category === 'locations' && 'flex'}`}>
+              <div className={`mb-5 flex gap-5`}>
                 {category === 'locations' && (
-                  <div className="w-2/12 flex justify-center items-center">
+                  <div className="flex justify-center items-center">
                     <Link href="/map">
                       <a className="p-2 bg-white text-black rounded font-bold h-full justify-center items-center flex space-x-2 hover:bg-zinc-300">
                         <FaMapMarkedAlt />
-                        <span>Live Map</span>
+                        <span>Map</span>
                       </a>
                     </Link>
                   </div>
@@ -104,6 +147,27 @@ const List = ({ items, category, categoryId }: Props) => {
                     placeholder="Search..."
                     onChange={(e) => setQuery(e.target.value)}
                   />
+                </div>
+
+                <div className="flex justify-center items-center">
+                  <select
+                    className="text-black h-full rounded-l"
+                    defaultValue={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                  >
+                    <option value="name">Name</option>
+                    <option value="updatedAt">Updated</option>
+                    <option value="createdAt">Created</option>
+                  </select>
+
+                  <button
+                    className="rounded-r p-2 bg-white text-black font-bold h-full justify-center items-center flex space-x-2 hover:bg-zinc-300"
+                    onClick={() =>
+                      setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))
+                    }
+                  >
+                    {sortOrder === 'asc' ? <BsSortDownAlt /> : <BsSortUpAlt />}
+                  </button>
                 </div>
               </div>
 
@@ -170,14 +234,20 @@ export const getServerSideProps: GetServerSideProps = async ({
         name: { contains: query?.s as string },
       };
 
-  const items = await prisma.piece.findMany({
+  const items: Item[] = await prisma.piece.findMany({
     where,
   });
-  const page = Number(params?.page) || 1;
+
+  const itemsWithDates = items.map((item) => {
+    item.createdAt = new Date(item.createdAt).toISOString() as string;
+    item.updatedAt = new Date(item.updatedAt).toISOString() as string;
+
+    return item;
+  });
 
   return {
     props: {
-      items,
+      items: itemsWithDates,
       category: params?.category,
       categoryId: category?.id,
     },

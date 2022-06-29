@@ -343,6 +343,11 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   const currentIndex = items.indexOf(item);
 
+  const i: Item = item;
+
+  i.createdAt = new Date(item.createdAt).toISOString() as string;
+  i.updatedAt = new Date(item.updatedAt).toISOString() as string;
+
   const nextSlug =
     items[currentIndex + 1 <= items.length - 1 ? currentIndex + 1 : 0].slug;
 
@@ -351,7 +356,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   return {
     props: {
-      item,
+      item: i,
       category: params?.category,
       nextSlug,
       prevSlug,

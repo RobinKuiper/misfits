@@ -1,5 +1,5 @@
 export interface Item {
-  id: string;
+  id: number;
   name: string;
   slug: string;
   description: string;
@@ -7,4 +7,6 @@ export interface Item {
   published: boolean;
   categoryId: number;
   featured: boolean;
+  createdAt: Date | string;
+  updatedAt: Date | string;
 }

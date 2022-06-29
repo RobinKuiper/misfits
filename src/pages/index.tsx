@@ -63,9 +63,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
       },
     },
   });
-  const item = items[Math.floor(Math.random() * items.length)];
+  const item: Item = items[Math.floor(Math.random() * items.length)];
 
-  console.log(item);
+  item.createdAt = new Date(item.createdAt).toISOString() as string;
+  item.updatedAt = new Date(item.updatedAt).toISOString() as string;
 
   return {
     props: {
