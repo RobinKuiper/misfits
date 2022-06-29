@@ -12,6 +12,7 @@ import { TABLES } from '../../utils/constants';
 import dynamic from 'next/dynamic';
 
 import 'react-quill/dist/quill.snow.css';
+import Tiptap from '../../components/Tiptap';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -256,14 +257,15 @@ const Item = ({ item, category, prevId, nextId, edit }: Props) => {
                   //   onChange={handleTextareaChange}
                   // />
                   <div className="w-full">
-                    <ReactQuill
+                    {/* <ReactQuill
                       theme="snow"
                       defaultValue={item.description}
                       onChange={setDescription}
                       className="bg-white text-black h-96 unreset"
                       modules={modules}
                       formats={formats}
-                    />
+                    /> */}
+                    <Tiptap content={item.description} />
                   </div>
                 ) : (
                   <span
