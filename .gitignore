@@ -2,6 +2,7 @@
 
 database
 .env
+uploads
 
 # dependencies
 /node_modules
