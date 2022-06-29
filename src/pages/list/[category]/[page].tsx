@@ -134,7 +134,7 @@ const List = ({
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
-              urlPrefix={`/${category}`}
+              urlPrefix={`/list/${category}`}
             />
           </div>
         </div>
