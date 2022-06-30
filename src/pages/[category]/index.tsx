@@ -5,12 +5,15 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
 import { FaMapMarkedAlt } from 'react-icons/fa';
-import { BsGrid3X3, BsList, BsSortDownAlt, BsSortUpAlt } from 'react-icons/bs';
-import GridItem from '../../components/GridItem';
 import Layout from '../../components/Layout';
-import Pagination from '../../components/Pagination';
 import { Item } from '../../interfaces/Item';
 import prisma from '../../lib/prisma';
+import {
+  GridItem,
+  ListItem,
+  PageControls,
+  Pagination,
+} from '../../components/category';
 
 const perPage = 12;
 
@@ -100,14 +103,6 @@ const List = ({ items, category, categoryId }: Props) => {
     Router.push(`/${category}/${result.slug}?edit=true`);
   };
 
-  const changeSort = (by: string) => {
-    if (sortBy === by) {
-      setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
-    } else {
-      setSortBy(by);
-    }
-  };
-
   return (
     <Layout>
       <Head>
@@ -115,110 +110,46 @@ const List = ({ items, category, categoryId }: Props) => {
       </Head>
 
       <div className="flex flex-row h-full relative">
-        {session.data && (
-          <div className="absolute bottom-0 right-0 flex space-x-5">
-            <button
-              onClick={handleCreate}
-              className="bg-black text-white p-3 rounded"
-            >
-              Create
-            </button>
-          </div>
-        )}
-
         <div className="text-white w-full p-4 space-y-5">
           <div className="h-full relative">
             <div className="h-full relative">
-              <div className={`mb-5 flex gap-5`}>
-                {category === 'locations' && (
-                  <div className="flex justify-center items-center">
-                    <Link href="/map">
-                      <a className="p-2 bg-white text-black rounded font-bold h-full justify-center items-center flex space-x-2 hover:bg-zinc-300">
-                        <FaMapMarkedAlt />
-                        <span>Map</span>
-                      </a>
-                    </Link>
-                  </div>
-                )}
-                <div className="w-full">
-                  <input
-                    type="search"
-                    className="w-full p-3 rounded shadow-2xl shadow-[#3C3C3C] text-white"
-                    style={{
-                      background: 'rgba(0,0,0,0.5)',
-                    }}
-                    placeholder="Search..."
-                    onChange={(e) => setQuery(e.target.value)}
-                  />
-                </div>
-
-                <div className="flex justify-center items-center shadow-2xl shadow-[#3C3C3C]">
-                  <button
-                    className="rounded-l p-2 text-white font-bold h-full justify-center items-center flex space-x-2 hover:bg-zinc-300"
-                    style={{
-                      background: 'rgba(0,0,0,0.5)',
-                    }}
-                    onClick={() =>
-                      setPreview((prev) => (prev === 'list' ? 'grid' : 'list'))
-                    }
-                  >
-                    {preview === 'list' ? <BsGrid3X3 /> : <BsList />}
-                  </button>
-
-                  <select
-                    className="text-white h-full"
-                    style={{
-                      background: 'rgba(0,0,0,0.5)',
-                    }}
-                    defaultValue={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                  >
-                    <option value="name">Name</option>
-                    <option value="updatedAt">Updated</option>
-                    <option value="createdAt">Created</option>
-                  </select>
-
-                  <button
-                    className="rounded-r p-2 text-white font-bold h-full justify-center items-center flex space-x-2 hover:bg-zinc-300"
-                    style={{
-                      background: 'rgba(0,0,0,0.5)',
-                    }}
-                    onClick={() =>
-                      setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))
-                    }
-                  >
-                    {sortOrder === 'asc' ? <BsSortDownAlt /> : <BsSortUpAlt />}
-                  </button>
-                </div>
-              </div>
+              <PageControls
+                setQuery={setQuery}
+                setPreview={setPreview}
+                setSortOrder={setSortOrder}
+                setSortBy={setSortBy}
+                preview={preview}
+                sortOrder={sortOrder}
+                sortBy={sortBy}
+                additionalButtons={
+                  category === 'locations' && (
+                    <div className="flex justify-center items-center">
+                      <Link href="/map">
+                        <a
+                          className="p-2 text-white rounded h-full justify-center items-center flex space-x-2 hover:bg-zinc-300 shadow-2xl shadow-[#3C3C3C]"
+                          style={{
+                            background: 'rgba(0,0,0,0.5)',
+                          }}
+                        >
+                          <FaMapMarkedAlt />
+                          <span>Map</span>
+                        </a>
+                      </Link>
+                    </div>
+                  )
+                }
+              />
 
               {preview === 'list' ? (
                 <ul className="space-y-2">
                   {shownItems.map((item) => (
-                    <Link href={`/notes/${item.slug}`}>
-                      <li
-                        className="border-2 border-zinc-800 shadow rounded
-                      cursor-pointer flex flex-col px-3 py-2 w-[30%]"
-                        style={{
-                          background: item.published
-                            ? 'rgba(0,0,0,0.7)'
-                            : '#f1f1f1',
-                          color: item.published ? 'white' : 'black',
-                        }}
-                      >
-                        <a>{item.name}</a>
-                      </li>
-                    </Link>
+                    <ListItem key={item.id} item={item} category={category} />
                   ))}
                 </ul>
               ) : (
                 <div className="grid gap-5 grid-cols-2 sm:grid-cols-4">
                   {shownItems.map((item) => (
-                    <GridItem
-                      key={item.id}
-                      item={item}
-                      url={`/${category}/${item.slug}`}
-                    />
+                    <GridItem key={item.id} item={item} category={category} />
                   ))}
                 </div>
               )}
@@ -231,6 +162,17 @@ const List = ({ items, category, categoryId }: Props) => {
             />
           </div>
         </div>
+
+        {session.data && (
+          <div className="absolute bottom-0 right-0 flex space-x-5">
+            <button
+              onClick={handleCreate}
+              className="bg-black text-white p-3 rounded"
+            >
+              Create
+            </button>
+          </div>
+        )}
       </div>
     </Layout>
   );

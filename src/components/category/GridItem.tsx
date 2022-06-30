@@ -7,10 +7,10 @@ import { Item } from '../interfaces/Item';
 
 type Props = {
   item: Item;
-  url: string;
+  category: string;
 };
 
-const GridItem = ({ item, url }: Props) => {
+const GridItem = ({ item, category }: Props) => {
   const [loading, setLoading] = useState(true);
 
   const { name, image, published } = item;
@@ -27,7 +27,7 @@ const GridItem = ({ item, url }: Props) => {
   }, []);
 
   return (
-    <Link href={url}>
+    <Link href={`/${category}/${item.slug}`}>
       <motion.div
         whileHover={{
           scale: 1.1,
