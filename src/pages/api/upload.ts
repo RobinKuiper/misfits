@@ -18,7 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!session && req.method !== 'GET') res.status(401).send({ error: "Not authorized" });
 
     let status = 200,
-        resultBody = { status: 'ok', message: 'Files were uploaded successfully' };
+        resultBody: {status: string, message: string, filePaths: string[]} = { status: 'ok', message: 'Files were uploaded successfully', filePaths: [] };
 
     /* Get files using formidable */
     const files = await new Promise<ProcessedFiles | undefined>((resolve, reject) => {
@@ -36,7 +36,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         console.log(e);
         status = 500;
         resultBody = {
-            status: 'fail', message: 'Upload error'
+            status: 'fail', message: 'Upload error', filePaths: []
         }
     });
 
@@ -54,6 +54,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         for (const file of files) {
             const tempPath = file[1].filepath;
             await fs.rename(tempPath, targetPath + file[1].originalFilename);
+            resultBody.filePaths.push(`/uploads/${file[1].originalFilename}`)
         }
     }
 

@@ -1,5 +1,6 @@
-import React from 'react';
-import { Item } from '../interfaces/Item';
+import React, { useState } from 'react';
+import { Item } from '../../interfaces/Item';
+import Upload from '../Upload';
 
 type Props = {
   item: Item;
@@ -7,14 +8,21 @@ type Props = {
 };
 
 const ItemImageInput = ({ item, setImage }: Props) => {
+  const [img, setImg] = useState(item.image);
+
   return (
-    <input
-      type="text"
-      defaultValue={item.image}
-      className="text-black p-3 w-full"
-      name="image"
-      onChange={(e) => setImage(e.target.value)}
-    />
+    <>
+      <Upload setImage={setImg} />
+
+      <input
+        type="text"
+        value={img}
+        defaultValue={item.image}
+        className="text-black p-3 w-full"
+        name="image"
+        onChange={(e) => setImage(e.target.value)}
+      />
+    </>
   );
 };
 
