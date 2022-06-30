@@ -11,27 +11,27 @@ import '@fontsource/barriecito';
 
 const menu = [
   {
-    url: 'characters',
+    url: '/characters',
     label: 'Characters',
     icon: <GiCharacter className="text-[#A29438]" />,
   },
   {
-    url: 'items',
+    url: '/items',
     label: 'Items',
     icon: <GiHeartNecklace className="text-[#A29438]" />,
   },
   {
-    url: 'npcs',
+    url: '/npcs',
     label: "Npc's",
     icon: <IoIosPeople className="text-[#A29438]" />,
   },
   {
-    url: 'locations',
+    url: '/locations',
     label: 'Locations',
     icon: <MdLocationOn className="text-[#A29438]" />,
   },
   {
-    url: 'notes',
+    url: '/notes',
     label: 'Notes',
     icon: <FaJournalWhills className="text-[#A29438]" />,
   },
@@ -79,7 +79,7 @@ const Navbar = (props: Props) => {
                   : ''
               }
             >
-              <Link href={`/list/${item.url}`}>
+              <Link href={item.url}>
                 <a className="flex items-center justify-center space-x-2">
                   {item.icon}
                   <span>{item.label}</span>

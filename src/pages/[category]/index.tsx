@@ -5,16 +5,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
 import { FaMapMarkedAlt } from 'react-icons/fa';
-import { GrGrid } from 'react-icons/gr';
-import {
-  BsGrid3X3,
-  BsList,
-  BsSortAlphaDown,
-  BsSortAlphaDownAlt,
-  BsSortDownAlt,
-  BsSortNumericDown,
-  BsSortUpAlt,
-} from 'react-icons/bs';
+import { BsGrid3X3, BsList, BsSortDownAlt, BsSortUpAlt } from 'react-icons/bs';
 import GridItem from '../../components/GridItem';
 import Layout from '../../components/Layout';
 import Pagination from '../../components/Pagination';

@@ -82,7 +82,7 @@ const Item = ({ item, category, prevSlug, nextSlug, edit }: Props) => {
     const response = await fetch(endpoint, options);
     const result = await response.json();
     setEditting(false);
-    Router.push(`/list/${category}/1`);
+    Router.push(`/${category}`);
   };
 
   const togglePublish = async () => {
