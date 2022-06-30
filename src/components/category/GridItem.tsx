@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { CircleLoader } from 'react-spinners';
-import { Item } from '../interfaces/Item';
+import { Item } from '../../interfaces/Item';
 
 type Props = {
   item: Item;

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { Item } from '../interfaces/Item';
+import { Item } from '../../interfaces/Item';
 
 type Props = {
   item: Item;
