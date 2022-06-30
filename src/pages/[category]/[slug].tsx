@@ -3,6 +3,7 @@ import { getSession, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Router from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { promises as fs } from 'fs';
 import Layout from '../../components/Layout';
 import { Item } from '../../interfaces/Item';
 import prisma from '../../lib/prisma';
@@ -19,6 +20,7 @@ import {
   NextArrow,
   PrevArrow,
 } from '../../components/item';
+import path from 'path';
 
 type Props = {
   item: Item;
@@ -100,7 +102,11 @@ const Item = ({ item, category, prevSlug, nextSlug, edit }: Props) => {
 
                   <div className="w-full sm:w-1/2 relative sm:mx-20 h-64 sm:h-full">
                     <div className="space-y-5">
-                      <ItemImageInput item={item} setImage={setImage} />
+                      <ItemImageInput
+                        item={item}
+                        setImage={setImage}
+                        image={image}
+                      />
                       <ItemPublishedInput
                         item={item}
                         setPublished={setPublished}
