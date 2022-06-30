@@ -117,7 +117,7 @@ const Item = ({ item, category, prevSlug, nextSlug, edit }: Props) => {
                       />
 
                       <button
-                        className="bg-orange-300 p-2 text-black font-bold w-full"
+                        className="bg-[#A29438] p-2 text-black font-bold w-full"
                         onClick={handleSave}
                       >
                         Save

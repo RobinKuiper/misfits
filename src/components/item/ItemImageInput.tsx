@@ -28,13 +28,19 @@ const ItemImageInput = ({ item, setImage, image }: Props) => {
     <>
       <Upload setImage={setImage} />
 
-      <div className="h-96 overflow-auto scrollbar">
+      <div
+        className="h-96 overflow-auto scrollbar"
+        style={{
+          background: 'rgba(0,0,0,0.7)',
+        }}
+      >
         <ul>
           {!loading ? (
             files.map((file) => (
               <li
-                className={`p-1 flex items-center space-x-5 cursor-pointer hover:bg-[#f1f1f1] hover:text-black ${
-                  image === `/uploads/${file}` && 'bg-white text-black'
+                className={`p-2 flex items-center space-x-5 cursor-pointer hover:bg-black hover:border-y-2 hover:border-[#A29438] box-border ${
+                  image === `/uploads/${file}` &&
+                  'border-y-2 border-[#A29438] bg-black'
                 }`}
                 onClick={() => {
                   setImage(`/uploads/${file}`);
