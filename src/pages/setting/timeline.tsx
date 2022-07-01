@@ -4,6 +4,11 @@ import { SettingSidebar, WithSidebar } from '../../components/page';
 
 const timeline = [
   {
+    background:
+      'linear-gradient(90deg, rgba(2,0,36,0) 0%, rgba(241,255,104,1) 50%)',
+    width: '5%',
+  },
+  {
     inner: true,
     title: 'The Founding',
     points: [
@@ -22,7 +27,7 @@ const timeline = [
           </p> \
 \
           <p>Metallic Dragons are created to protect them.</p>',
-    background: 'yellow',
+    background: 'rgba(241,255,104,1)',
     color: 'black',
     width: '10%',
   },
@@ -35,8 +40,8 @@ const timeline = [
   {
     inner: true,
     text: '',
-    background: 'green',
-    width: '38%',
+    background: 'rgba(120,255,104,1)',
+    width: '32%',
   },
   {
     inner: false,
@@ -47,8 +52,8 @@ const timeline = [
   {
     inner: true,
     text: '',
-    background: 'red',
-    width: '9%',
+    background: 'rgba(255,104,104,1)',
+    width: '10%',
   },
   {
     inner: false,
@@ -59,8 +64,13 @@ const timeline = [
   {
     inner: true,
     text: '',
-    background: 'blue',
-    width: '40%',
+    background: 'rgba(104,153,255,1)',
+    width: '35%',
+  },
+  {
+    background:
+      'linear-gradient(270deg, rgba(2,0,36,0) 0%, rgba(104,153,255,1) 50%)',
+    width: '5%',
   },
 ];
 

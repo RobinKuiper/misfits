@@ -1,0 +1,21 @@
+-- CreateTable
+CREATE TABLE "Period" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "label" TEXT NOT NULL,
+    "length" INTEGER NOT NULL,
+    "color" TEXT NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Event" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "title" TEXT,
+    "text" TEXT NOT NULL,
+    "image" TEXT,
+    "published" BOOLEAN NOT NULL DEFAULT false,
+    "periodId" INTEGER NOT NULL,
+    "position" INTEGER NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Event_periodId_fkey" FOREIGN KEY ("periodId") REFERENCES "Period" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);

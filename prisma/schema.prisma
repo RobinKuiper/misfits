@@ -39,3 +39,26 @@ model Piece{
   createdAt   DateTime    @default(now()) 
   updatedAt   DateTime    @default(now()) @updatedAt()
 }
+
+model Period{
+  id          Int         @id @default(autoincrement())
+  label       String?
+  slug        String?     @unique()
+  position    Int         @unique() @default(1)
+  length      Int         
+  color       String      
+  events      Event[]
+}
+
+model Event{
+  id          Int         @id @default(autoincrement())
+  title       String?
+  text        String
+  image       String?
+  published   Boolean     @default(false)
+  period      Period      @relation(fields: [periodId], references: [id], onDelete: Cascade)
+  periodId    Int
+  position    Int
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now()) @updatedAt()
+}
