@@ -5,28 +5,26 @@ type Props = {};
 
 const SettingSidebar = (props: Props) => {
   return (
-    <ul>
-      <li>
+    <ul className="flex flex-row sm:flex-col space-y-0 justify-around sm:space-y-2">
+      <li className="">
         <Link href="/setting">
           <a>Exandria</a>
         </Link>
-        <ul className="ml-3">
-          <li>
-            <Link href="/setting/calendar">
-              <a>Calendar</a>
-            </Link>
-          </li>
-          <li>
+      </li>
+      <li>
+        <Link href="/setting/calendar">
+          <a>Calendar</a>
+        </Link>
+      </li>
+      {/* <li>
             <Link href="/setting/theology">
               <a>Theology</a>
             </Link>
-          </li>
-          <li>
-            <Link href="/setting/timeline">
-              <a>Timeline</a>
-            </Link>
-          </li>
-        </ul>
+          </li> */}
+      <li>
+        <Link href="/setting/timeline">
+          <a>Timeline</a>
+        </Link>
       </li>
     </ul>
   );

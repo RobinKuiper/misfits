@@ -3,19 +3,32 @@ import React from 'react';
 import { MdArrowForwardIos } from 'react-icons/md';
 
 type Props = {
-  url: string;
+  url?: string;
+  onClick?: () => void;
 };
 
-const NextArrow = ({ url }: Props) => {
-  return (
-    <Link href={url}>
+const NextArrow = ({ url, onClick }: Props) => {
+  if (onClick)
+    return (
       <div className="hidden w-1/12 text-white sm:flex justify-center items-center text-6xl cursor-pointer">
-        <a>
+        <button onClick={onClick}>
           <MdArrowForwardIos />
-        </a>
+        </button>
       </div>
-    </Link>
-  );
+    );
+
+  if (url)
+    return (
+      <Link href={url}>
+        <div className="hidden w-1/12 text-white sm:flex justify-center items-center text-6xl cursor-pointer">
+          <a>
+            <MdArrowForwardIos />
+          </a>
+        </div>
+      </Link>
+    );
+
+  return <></>;
 };
 
 export default NextArrow;

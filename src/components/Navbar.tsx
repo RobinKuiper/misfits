@@ -6,6 +6,7 @@ import { IoIosPeople } from 'react-icons/io';
 import { useRouter } from 'next/router';
 import { AiOutlineGithub } from 'react-icons/ai';
 import { FaJournalWhills } from 'react-icons/fa';
+import { GoInfo } from 'react-icons/go';
 import { motion } from 'framer-motion';
 import '@fontsource/barriecito';
 
@@ -80,7 +81,7 @@ const Navbar = (props: Props) => {
               }
             >
               <Link href={item.url}>
-                <a className="flex items-center justify-center space-x-2">
+                <a className="flex items-center justify-center space-x-2 hover:text-[#f1f1f1]">
                   {item.icon}
                   <span>{item.label}</span>
                 </a>
@@ -98,10 +99,11 @@ const Navbar = (props: Props) => {
         </ul>
 
         <ul className="hidden sm:flex items-center">
-          <li className="h-10 w-10 text-white text-3xl justify-center items-center flex">
-            <Link href="https://github.com/RobinKuiper/misfits">
-              <a target="_blank" rel="noopener noreferrer">
-                <AiOutlineGithub />
+          <li className=" text-white justify-center items-center flex">
+            <Link href="/setting">
+              <a className="flex items-center justify-center space-x-1 hover:text-[#f1f1f1]">
+                <GoInfo className="text-[#A29438]" />
+                <span>Setting Info</span>
               </a>
             </Link>
           </li>
@@ -140,35 +142,37 @@ const Navbar = (props: Props) => {
             backgroundColor: 'rgba(0,0,0,0.9)',
           }}
         >
-          <ul className=" space-y-5 mt-20">
-            {menu.map((item, i) => (
-              <motion.li
-                initial={{
-                  marginLeft: -1000,
-                }}
-                animate={{
-                  marginLeft: 0,
-                  transition: {
-                    duration: 1,
-                    delay: 0.05 + i * 0.1,
-                  },
-                }}
-                className={
-                  router.asPath.includes(item.url)
-                    ? 'border-b border-[#A29438]'
-                    : ''
-                }
-              >
-                <Link href={`/${item.url}/1`}>
-                  <a
-                    className="flex items-center justify-center space-x-2"
-                    onClick={toggleMenu}
-                  >
-                    <span>{item.label}</span>
-                  </a>
-                </Link>
-              </motion.li>
-            ))}
+          <ul className="space-y-5 mt-20">
+            {menu
+              .concat([{ url: '/setting', label: 'Setting Info', icon: <></> }])
+              .map((item, i) => (
+                <motion.li
+                  initial={{
+                    marginLeft: -1000,
+                  }}
+                  animate={{
+                    marginLeft: 0,
+                    transition: {
+                      duration: 1,
+                      delay: 0.05 + i * 0.1,
+                    },
+                  }}
+                  className={
+                    router.asPath.includes(item.url)
+                      ? 'border-b border-[#A29438]'
+                      : ''
+                  }
+                >
+                  <Link href={`/${item.url}`}>
+                    <a
+                      className="flex items-center justify-center space-x-2"
+                      onClick={toggleMenu}
+                    >
+                      <span>{item.label}</span>
+                    </a>
+                  </Link>
+                </motion.li>
+              ))}
           </ul>
         </motion.div>
       )}

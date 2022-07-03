@@ -59,6 +59,4 @@ model Event{
   period      Period      @relation(fields: [periodId], references: [id], onDelete: Cascade)
   periodId    Int
   position    Int
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @default(now()) @updatedAt()
 }

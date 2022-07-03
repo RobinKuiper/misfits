@@ -15,8 +15,10 @@ const WithSidebar = ({ title, children, sidebar }: Props) => {
         <title>{title} - Misfits</title>
       </Head>
 
-      <div className="sm:flex flex-row h-full relative text-white">
-        <div className="w-1/12 m-5 mb-16 border-r-2">{sidebar}</div>
+      <div className="flex flex-col sm:flex-row h-full relative text-white">
+        <div className="sm:w-1/12 m-5 sm:mb-16 sm:border-r-2 border-gray-500 border-b-2 sm:border-b-0">
+          {sidebar}
+        </div>
 
         <div className="text-white w-full p-4 space-y-5 mb-16 scrollbar sm:overflow-y-auto">
           {children}
